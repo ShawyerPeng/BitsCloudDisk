@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="model.User" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="TINYINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="iconimg" property="iconimg" jdbcType="VARCHAR" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="is_vip" property="isVip" jdbcType="BIT" />
+    <result column="memory_size" property="memorySize" jdbcType="BIGINT" />
+    <result column="used_size" property="usedSize" jdbcType="BIGINT" />
+    <result column="private_status" property="privateStatus" jdbcType="BIT" />
+    <result column="private_pass" property="privatePass" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="last_login" property="lastLogin" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_id, username, password, nickname, realname, gender, phone, email, iconimg, info, 
+    level, is_vip, memory_size, used_size, private_status, private_pass, created_time, 
+    last_login
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="model.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="model.UserExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="model.User" >
+    insert into user (user_id, username, password, 
+      nickname, realname, gender, 
+      phone, email, iconimg, 
+      info, level, is_vip, memory_size, 
+      used_size, private_status, private_pass, 
+      created_time, last_login)
+    values (#{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{iconimg,jdbcType=VARCHAR}, 
+      #{info,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{isVip,jdbcType=BIT}, #{memorySize,jdbcType=BIGINT}, 
+      #{usedSize,jdbcType=BIGINT}, #{privateStatus,jdbcType=BIT}, #{privatePass,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{lastLogin,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="realname != null" >
+        realname,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="iconimg != null" >
+        iconimg,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="isVip != null" >
+        is_vip,
+      </if>
+      <if test="memorySize != null" >
+        memory_size,
+      </if>
+      <if test="usedSize != null" >
+        used_size,
+      </if>
+      <if test="privateStatus != null" >
+        private_status,
+      </if>
+      <if test="privatePass != null" >
+        private_pass,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="lastLogin != null" >
+        last_login,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="iconimg != null" >
+        #{iconimg,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="isVip != null" >
+        #{isVip,jdbcType=BIT},
+      </if>
+      <if test="memorySize != null" >
+        #{memorySize,jdbcType=BIGINT},
+      </if>
+      <if test="usedSize != null" >
+        #{usedSize,jdbcType=BIGINT},
+      </if>
+      <if test="privateStatus != null" >
+        #{privateStatus,jdbcType=BIT},
+      </if>
+      <if test="privatePass != null" >
+        #{privatePass,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLogin != null" >
+        #{lastLogin,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="model.UserExample" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null" >
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realname != null" >
+        realname = #{record.realname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=TINYINT},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iconimg != null" >
+        iconimg = #{record.iconimg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.info != null" >
+        info = #{record.info,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.isVip != null" >
+        is_vip = #{record.isVip,jdbcType=BIT},
+      </if>
+      <if test="record.memorySize != null" >
+        memory_size = #{record.memorySize,jdbcType=BIGINT},
+      </if>
+      <if test="record.usedSize != null" >
+        used_size = #{record.usedSize,jdbcType=BIGINT},
+      </if>
+      <if test="record.privateStatus != null" >
+        private_status = #{record.privateStatus,jdbcType=BIT},
+      </if>
+      <if test="record.privatePass != null" >
+        private_pass = #{record.privatePass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTime != null" >
+        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastLogin != null" >
+        last_login = #{record.lastLogin,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set user_id = #{record.userId,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      realname = #{record.realname,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=TINYINT},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      iconimg = #{record.iconimg,jdbcType=VARCHAR},
+      info = #{record.info,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=INTEGER},
+      is_vip = #{record.isVip,jdbcType=BIT},
+      memory_size = #{record.memorySize,jdbcType=BIGINT},
+      used_size = #{record.usedSize,jdbcType=BIGINT},
+      private_status = #{record.privateStatus,jdbcType=BIT},
+      private_pass = #{record.privatePass,jdbcType=VARCHAR},
+      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      last_login = #{record.lastLogin,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="model.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="iconimg != null" >
+        iconimg = #{iconimg,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="isVip != null" >
+        is_vip = #{isVip,jdbcType=BIT},
+      </if>
+      <if test="memorySize != null" >
+        memory_size = #{memorySize,jdbcType=BIGINT},
+      </if>
+      <if test="usedSize != null" >
+        used_size = #{usedSize,jdbcType=BIGINT},
+      </if>
+      <if test="privateStatus != null" >
+        private_status = #{privateStatus,jdbcType=BIT},
+      </if>
+      <if test="privatePass != null" >
+        private_pass = #{privatePass,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLogin != null" >
+        last_login = #{lastLogin,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.User" >
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      iconimg = #{iconimg,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
+      is_vip = #{isVip,jdbcType=BIT},
+      memory_size = #{memorySize,jdbcType=BIGINT},
+      used_size = #{usedSize,jdbcType=BIGINT},
+      private_status = #{privateStatus,jdbcType=BIT},
+      private_pass = #{privatePass,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      last_login = #{lastLogin,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+
+
+    <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where username = #{username,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByPassword" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where `username` = #{username,jdbcType=VARCHAR} AND `password` = #{password,jdbcType=VARCHAR}
+    </select>
+    <select id="selectRowCount" resultType="java.lang.Integer">
+        select row_count()
+    </select>
+</mapper>

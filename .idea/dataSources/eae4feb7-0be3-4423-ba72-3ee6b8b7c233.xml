@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="bits_cloud_disk@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.2">
+    <root id="1"/>
+    <schema id="2" parent="1" name="bits_cloud_disk">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="bitsim"/>
+    <schema id="4" parent="1" name="bits_net_disk"/>
+    <schema id="5" parent="1" name="campus"/>
+    <schema id="6" parent="1" name="chatcolony"/>
+    <schema id="7" parent="1" name="dcnetworkdisk"/>
+    <schema id="8" parent="1" name="demo"/>
+    <schema id="9" parent="1" name="dubbo"/>
+    <schema id="10" parent="1" name="dynamic1"/>
+    <schema id="11" parent="1" name="dynamic2"/>
+    <schema id="12" parent="1" name="easyim"/>
+    <schema id="13" parent="1" name="es"/>
+    <schema id="14" parent="1" name="information_schema"/>
+    <schema id="15" parent="1" name="lottery"/>
+    <schema id="16" parent="1" name="mysql"/>
+    <schema id="17" parent="1" name="performance_schema"/>
+    <schema id="18" parent="1" name="permission"/>
+    <schema id="19" parent="1" name="quartz"/>
+    <schema id="20" parent="1" name="ratelimiter"/>
+    <schema id="21" parent="1" name="redis"/>
+    <schema id="22" parent="1" name="sakila"/>
+    <schema id="23" parent="1" name="shawyer"/>
+    <schema id="24" parent="1" name="shiro"/>
+    <schema id="25" parent="1" name="ssm"/>
+    <schema id="26" parent="1" name="store"/>
+    <schema id="27" parent="1" name="sys"/>
+    <schema id="28" parent="1" name="test"/>
+    <schema id="29" parent="1" name="testdb"/>
+    <schema id="30" parent="1" name="wms_db"/>
+    <schema id="31" parent="1" name="world"/>
+    <schema id="32" parent="1" name="yim"/>
+    <table id="33" parent="2" name="user">
+      <Comment>用户信息表</Comment>
+    </table>
+    <column id="34" parent="33" name="user_id">
+      <Position>1</Position>
+      <Comment>用户ID，主键</Comment>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="35" parent="33" name="username">
+      <Position>2</Position>
+      <Comment>用户名</Comment>
+      <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="36" parent="33" name="password">
+      <Position>3</Position>
+      <Comment>密码</Comment>
+      <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="37" parent="33" name="nickname">
+      <Position>4</Position>
+      <Comment>用户昵称</Comment>
+      <DataType>varchar(32)|0</DataType>
+      <DefaultExpression>&apos;请更换昵称&apos;</DefaultExpression>
+    </column>
+    <column id="38" parent="33" name="realname">
+      <Position>5</Position>
+      <Comment>真实姓名</Comment>
+      <DataType>varchar(32)|0</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+    </column>
+    <column id="39" parent="33" name="gender">
+      <Position>6</Position>
+      <Comment>性别（0:未知，1:男，2:女）</Comment>
+      <DataType>tinyint(4)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="40" parent="33" name="phone">
+      <Position>7</Position>
+      <Comment>手机号码</Comment>
+      <DataType>varchar(11)|0</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+    </column>
+    <column id="41" parent="33" name="email">
+      <Position>8</Position>
+      <Comment>邮箱地址</Comment>
+      <DataType>varchar(100)|0</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+    </column>
+    <column id="42" parent="33" name="iconimg">
+      <Position>9</Position>
+      <Comment>用户头像</Comment>
+      <DataType>varchar(180)|0</DataType>
+      <DefaultExpression>&apos;avatar.jpg&apos;</DefaultExpression>
+    </column>
+    <column id="43" parent="33" name="info">
+      <Position>10</Position>
+      <Comment>个人简介</Comment>
+      <DataType>varchar(255)|0</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+    </column>
+    <column id="44" parent="33" name="level">
+      <Position>11</Position>
+      <Comment>用户等级</Comment>
+      <DataType>int(2) unsigned|0</DataType>
+      <DefaultExpression>&apos;1&apos;</DefaultExpression>
+    </column>
+    <column id="45" parent="33" name="is_vip">
+      <Position>12</Position>
+      <Comment>0:不是vip, 1:是vip</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="46" parent="33" name="memory_size">
+      <Position>13</Position>
+      <Comment>用户默认内存(1G)</Comment>
+      <DataType>bigint(20) unsigned|0</DataType>
+      <DefaultExpression>&apos;1073741824&apos;</DefaultExpression>
+    </column>
+    <column id="47" parent="33" name="used_size">
+      <Position>14</Position>
+      <Comment>用户已用内存</Comment>
+      <DataType>bigint(20) unsigned|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="48" parent="33" name="private_status">
+      <Position>15</Position>
+      <Comment>是否开启私密空间（0:未开启，1:已开启）</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="49" parent="33" name="private_pass">
+      <Position>16</Position>
+      <Comment>私密空间密码</Comment>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="50" parent="33" name="created_time">
+      <Position>17</Position>
+      <Comment>账号创建时间</Comment>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <column id="51" parent="33" name="last_login">
+      <Position>18</Position>
+      <Comment>账号最近登录时间</Comment>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;1970-01-02 00:00:00&apos;</DefaultExpression>
+    </column>
+    <index id="52" parent="33" name="nickname">
+      <ColNames>nickname</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="53" parent="33" name="username">
+      <ColNames>username</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="54" parent="33" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="55" parent="33" name="username">
+      <ColNames>username</ColNames>
+      <UnderlyingIndexName>username</UnderlyingIndexName>
+    </key>
+    <key id="56" parent="33" name="nickname">
+      <ColNames>nickname</ColNames>
+      <UnderlyingIndexName>nickname</UnderlyingIndexName>
+    </key>
+  </database-model>
+</dataSource>
