@@ -20,7 +20,7 @@ public class FtpUtil {
      */
     public static boolean uploadFile(String ip, int port, String username, String password, String remotePath,
                                      String remoteFileName, InputStream input) {
-        Long start = System.currentTimeMillis();
+        Integer start = System.currentTimeMillis();
         boolean result = false;
         FTPClient ftp = null;
         try {
@@ -44,7 +44,7 @@ public class FtpUtil {
             ftp.storeFile(remoteFileName, input);
 
             result = true;
-            Long end = System.currentTimeMillis();
+            Integer end = System.currentTimeMillis();
             LOG.info("上传游戏图片，上传时间:" + (end - start));
         } catch (IOException e) {
             LOG.error("uploadFile failed : " + e.getMessage());

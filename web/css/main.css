@@ -1,0 +1,436 @@
+    	body, html {
+    		height: 100%;
+    		overflow: hidden;
+    	}
+        div, ol, ul{
+            margin: 0;
+            padding: 0;
+            outline: 0;
+        }
+        ol, ul, li{
+            list-style: none;
+        }
+    	.layout-wrapper {
+    		height: 100%;
+    		background-color: #fff;
+    		min-width: 1200px;
+    	}
+    	.layout-header {
+    		height: 61px;
+    		background: #F5F6F9;
+    		border-bottom: 1px solid #E6E7EC;
+    	}
+    	.logo {
+			margin: auto;
+			display: inline;
+			vertical-align: middle;
+			font-weight: bold;
+    	}
+        .logo img {
+            height: 60px;
+            width: auto;
+        }
+        .btn-transfer {
+            margin-top: 5.5px;
+            margin-left: 8px;
+            position: relative;
+        }
+        .btn-transfer img{
+            height: 37px;
+            width: 37px;
+            position: relative;
+            top: -3px;
+            left: 1px;
+        }
+        .btn-transfer span{
+            position: absolute !important;
+            font-size: 12px;
+            background-color: #F74B4B !important;
+            color: #fff !important;
+            top: -4px !important;
+            left: 34px;
+        }
+        .btn-group-sort {
+            margin-top: 14px;
+            float: right;
+
+        }
+        .btn-group-view {
+            margin-top: 14px;
+        }
+
+        .btn-upload {
+            padding: 0 45px;
+            border-radius: 20px;
+            cursor: pointer;
+            height: 36px;
+            line-height: 36px;
+            margin-top: 12px;
+            margin-left: 20px;
+        }
+        .layout-body {
+            height:700px;
+        }
+
+        .layout-body-left {
+            border-right: 1px solid #E6E7EC;
+            height: 100%;
+        }
+        .layout-user {
+            width: 100%;
+            height: 130px;
+        }
+        .layout-user img {
+            width: 50px;
+            height: 50px;
+            margin: 20px auto 0px;
+            display:block; 
+        }
+        .layout-user p {
+            text-align: center;
+            margin-top: 5px;
+            margin-bottom: 0px;
+        }
+        .layout-user .progress {
+            margin-top: 10px;  
+        }
+
+        .nav-title-icon{
+            margin-right: 10px;
+        }
+        .layout-body-content{
+            height: 100%;
+            padding: 0px 0px 0px 0px;
+            overflow: auto;
+        }
+
+
+
+
+
+        .fixed-title {
+            height: 60px;
+        }
+        .fixed-title span{
+            color: #777;
+        }
+        #loading_mission_list li, #complete_mission_list li{
+            height: 64px;
+            line-height: 64px;
+            padding: 0 40px 0 30px;
+            position: relative;
+            border-bottom: 1px solid #E6E7EC;  
+        }
+        #loading_mission_list li:hover, #complete_mission_list li:hover{
+            text-decoration: none;
+            background-color: #eee;
+        }
+        .mission-head {
+            width: 40%;
+            float: left;
+        }
+        .mission-icon-wrapper{
+            width: 36px;
+            text-align: center;
+            float: left;
+            cursor: default;
+        }
+        .thumb{
+            float: left;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            margin: 8px 15px 0 0;
+        }
+        .thumb .thumb-icon{
+            height: 40px;
+            width: 40px;
+            float: left;/*!!!!!*/
+        }
+        .mission-info {
+            position: relative;
+            z-index: 0;
+            line-height: 1.5;
+            padding-top: 16px;
+            box-sizing: border-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 56px;
+            white-space: nowrap;
+            overflow-y: hidden;
+        }
+        .mission-info .mission-file-name{
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+        .mission-info .mission-file-size{
+            position: absolute;
+            z-index: 0;
+            top: 35px;
+            left: 0;
+            font-size: 12px;
+            color: #74787C;
+        }
+        .mission-progress, .mission-complete{
+            display: inline-block;
+            width: 45%;
+            margin-top: 22px;
+            margin-left: 30px;
+        }
+        .mission-control{
+            display: inline-block;
+            margin: 0 0 0 30px;
+            float: right;
+        }
+        .mission-control a{
+            display: block;
+            float: left;
+            margin: 0 22px 0 0;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .dynamic-mission-list-title {
+            position: relative;
+            height: 60px;
+            padding: 0 0 0 40px;
+            line-height: 60px;
+            border-bottom: 1px solid #E6E7EC;
+            display: none;
+        }
+        .dynamic-mission-list-title p{
+            font-size: 14px;
+            color: #74787C;
+        }
+        .btn-modify-all{
+            position: absolute;
+            z-index: 0;
+            right: 50px;
+            top: 0;
+            bottom: 0;
+        }  
+
+
+
+
+
+        .disk-file-path-wrapper, .fixed-title{
+            border-bottom: 1px solid #E6E7EC;
+            line-height: 60px;
+            padding: 0px 50px 0px 30px;
+        }
+        .disk-file-path-wrapper .select-all{
+            padding-right: 11px;
+            margin-right: 10px;
+            height: 60px;
+            width: 47px;
+            display: inline-block;
+            text-align: center;
+        }
+        .disk-file-path-wrapper .select-all > input{
+            height: 18px;
+            width: 18px;
+            vertical-align: middle;
+            position: relative;
+            top: -3px;
+        }
+        .disk-file-path-wrapper .disk-file-path {
+            display: inline-block;
+            background-color: #fff;
+            margin: 0px;
+            padding: 0px;
+        }
+        .disk-file-path-wrapper .disk-file-path li .active{
+            text-decoration: none;
+            color: #337ab7;
+            font-weight: 700;
+        }
+        .disk-file-item,.modal-file{
+            line-height: 56px;
+            height: 56px;
+            border-bottom: 1px solid #E6E7EC;
+            padding: 0px 50px 0px 30px;
+        }
+        .disk-file-item{
+            cursor: pointer;
+        }
+        .disk-file-item:hover{
+            text-decoration: none;
+            background-color: #eee;
+        }
+        .selected{
+            background-color: #eee;
+        }
+        .disk-file-item .file-head{
+            width: 35%;
+            float: left;
+        }
+        .disk-file-item .file-head .select{
+            height: 56px;
+            width: 36px;
+            text-align: center;
+            float: left;
+            z-index: 100;
+            cursor: default;
+        }
+        .disk-file-item .file-head .select > input{
+            height: 18px;
+            width: 18px;
+            vertical-align: middle;
+            position: relative;
+            top: -3px;       
+        }
+
+        .disk-file-item .file-head .file-title{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            height: 56px;
+        }
+        .disk-file-item .file-info{
+            width: 65%;
+            text-align: right;
+            float: left;
+            color: #74787C;
+            font-size: 12px;
+            height: 100%;
+            overflow-y: hidden;
+        }
+        .disk-file-item .file-info .file-size{
+            display: inline-block;
+            width: 9%;
+            margin: 0 0 0 1%;
+        }
+        .disk-file-item .file-info .file-time{
+            display: inline-block;
+            margin: 0 0 0 5%;
+        }
+
+
+
+        .picture-wall{
+            padding-left: 50px;
+            padding-top: 30px;
+        }
+        .picture-wall .picture{
+            width: 184px;
+            height: 184px;
+            position: relative;
+            float: left;
+            margin: 0 15px 15px 0;
+            cursor: pointer;
+            overflow: hidden;
+            border: 2px solid transparent;    
+        }
+        .picture-wall .picture:hover{
+            border: 2px solid #337ab7;
+            border-radius: 2px;
+        }
+        .picture-wall .picture .picture-img{
+            height: 137px;
+            width: 100%;
+            border: 1px solid #D5D7DF;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 3px 5px 0 rgba(15,32,65,.06);
+        }
+        .picture-wall .picture .picture-img img{
+            width: 100%;
+            height: auto;
+            min-height: 100%!important;
+            background-image: none!important;
+            margin: 0;
+            background-color: #EBECF0;
+        }
+        .picture-wall .picture .picture-info p{
+            height: 40px;
+            line-height: 40px;
+            padding: 0 10px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .picture-wall .picture .picture-info .picture-info-title{
+            font-size: 18px;
+        }
+
+        .input-safePassword{
+            height: 150px;
+            width: 500px;
+            margin-top: 200px;
+        }
+
+        .modal-file .modal-file-info{
+            width: 80%;
+            float: left;
+        }
+        .modal-file .modal-file-info .modal-file-title{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            height: 56px;
+        }
+        .modal-file .modal-addtional-info{
+            float: right;
+            color: #74787C;
+            display: block;
+        }
+        .dirbox{
+            padding: 24px;
+        }
+        .dirbox-header{
+            position: relative;
+            padding: 8px 10px;
+            border: 1px solid #dedede;
+        }
+        .dirbox-header label,.dirbox-header span{
+            color: #6c6c6c;
+        }
+        .dirbox-body{
+            border: 1px solid #dedede;
+            width: 100%;
+            height: 300px;
+            overflow: auto;
+        }
+        .treeNode-info{
+            padding: 5px;
+            white-space: nowrap;
+            /*width:fit-content;
+            width:-webkit-fit-content;
+            width:-moz-fit-content;*/
+        }
+        .treeNode-info .glyphicon{
+            color: #337ab7;
+            padding: 0px 5px;
+
+        }
+        .treeNode-info:hover{
+            background-color: #EBF5FF;
+            cursor: pointer;
+        }
+        .treeNode-info .treeNode-info-name{
+            color: #000;
+        }
+
+        .mkfolder{
+            position: relative;
+            top: 13.5px;
+            float: right;         
+        }
+
+        .fileedit{
+            display: inline-block;
+            width: 320px;
+            box-sizing: border-box;   
+        }
+        .fileedit input{
+            display: inline-block;
+            width: 100%;
+            height: 25px;
+            box-sizing: border-box;
+        }
+        .searched-word{
+            color: #4297ff;
+        }

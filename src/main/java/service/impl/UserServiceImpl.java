@@ -1,15 +1,19 @@
 package service.impl;
 
+import dto.UserDTO;
 import mapper.UserMapper;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.UserService;
+import util.object.DTOConvertUtil;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private DTOConvertUtil convertor;
 
     @Override
     public int insertUser(User user) {
@@ -44,13 +48,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return userMapper.selectByUsername(username);
+    public UserDTO getUserByUsername(String username) {
+        User user = userMapper.selectByUsername(username);
+        if (user == null) {
+            return null;
+        } else {
+            return convertor.convertToDTO(user);
+        }
     }
 
     @Override
-    public User getUserByUserId(Integer userId) {
-        return userMapper.selectByPrimaryKey(userId);
+    public UserDTO getUserByUserId(Integer userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        if (user == null) {
+            return null;
+        } else {
+            return convertor.convertToDTO(user);
+        }
     }
 
     @Override

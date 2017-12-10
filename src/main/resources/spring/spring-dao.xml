@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.2.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+    <!-- 配置数据库相关参数properties -->
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <!-- 配置数据源 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="maxTotal" value="10"/>
+        <!--最大空闲时间,60秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
+        <property name="maxIdle" value="20"/>
+        <property name="minIdle" value="10"/>
+        <property name="initialSize" value="10"/>
+        <property name="defaultAutoCommit" value="true"/>
+    </bean>
+
+    <!-- 配置 MyBatis 的 SqlsessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 注入数据库连接池 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 配置MyBatis全局配置文件:mybatis-config.xml -->
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+        <!-- 扫描entity包，使用别名 -->
+        <property name="typeAliasesPackage" value="model"/>
+        <!-- 扫描sql配置文件:mapper需要的xml文件，在此扫描所以Mapper文件，以保证这些Mapper在使用Session时可以被Spring管理的Bean扫描到 -->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+    <!-- 配置 Hibernate 的 SessionFactory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="hibernateProperties">
+            <value>
+                hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+                hibernate.show_sql=false
+                hibernate.format_sql=true
+                hibernate.hbm2ddl.auto=update
+                hibernate.connection.isolation=4
+            </value>
+        </property>
+        <property name="packagesToScan" value="entity"/>
+    </bean>
+    <bean id="hiberanteTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- 3. MapperScannerConfigurer，配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
+    <!-- MapperScannerConfigurer会查找类路径下的映射器，并自动将它们创建成MapperFactoryBean，之后自动装配（将会优先于HibernateImpl) -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 给出需要扫描Dao接口的包 -->
+        <property name="basePackage" value="mapper"/>
+        <!-- 注入sqlSessionFactory -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+</beans>

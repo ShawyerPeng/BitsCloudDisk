@@ -19,9 +19,28 @@
     <!-- 1. 使用 spring 组件扫描 -->
     <context:component-scan base-package="controller"/>
 
-    <!-- 2. 通过 annotation-driven 可以替代下边的处理器映射器和适配器 -->
-    <mvc:annotation-driven/>
+    <!--对特定的请求进行拦截（Token验证）-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**/*"/>
+            <mvc:exclude-mapping path="/user/login"/>
+            <mvc:exclude-mapping path="/user/register"/>
+            <bean class="filter.TokenInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!-- 2. 通过 annotation-driven 可以替代处理器映射器和适配器 -->
+    <!-- 开启SpringMVC注解模式 -->
+    <mvc:annotation-driven conversion-service="customConversionService"/>
+    <!-- 静态资源默认servlet配置 -->
     <mvc:default-servlet-handler/>
+    <bean id="customConversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="converter.DateConverter"/>
+            </set>
+        </property>
+    </bean>
 
     <!-- 3. 配置视图解析器 ViewResolver -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

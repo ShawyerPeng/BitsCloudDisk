@@ -91,8 +91,8 @@ public class FileUtil {
      * 将上传的文件进行重命名
      */
     private static String rename(String name) {
-        Long now = Long.parseLong(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-        Long random = (long) (Math.random() * now);
+        Integer now = Integer.parseLong(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        Integer random = (long) (Math.random() * now);
         String fileName = now + "" + random;
         if (name.indexOf(".") != -1) {
             fileName += name.substring(name.lastIndexOf("."));

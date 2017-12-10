@@ -11,7 +11,7 @@ public class IpUtil {
     /**
      * long 转为 ip
      */
-    public static String getIP(Long ipaddr) {
+    public static String getIP(Integer ipaddr) {
         long y = ipaddr % 256;
         long m = (ipaddr - y) / (256 * 256 * 256);
         long n = (ipaddr - 256 * 256 * 256 * m - y) / (256 * 256);
@@ -22,14 +22,14 @@ public class IpUtil {
     /**
      * IP 转 long
      */
-    public static Long setIP(String ipaddr) {
+    public static Integer setIP(String ipaddr) {
         if (!isIpv4(ipaddr)) {
             return 0L;
         }
         String ip[] = ipaddr.split("\\.");
-        Long ipLong = 256 * 256 * 256 * Long.parseLong(ip[0]) + 256 * 256
-                * Long.parseLong(ip[1]) + 256 * Long.parseLong(ip[2])
-                + Long.parseLong(ip[3]);
+        Integer ipLong = 256 * 256 * 256 * Integer.parseLong(ip[0]) + 256 * 256
+                * Integer.parseLong(ip[1]) + 256 * Integer.parseLong(ip[2])
+                + Integer.parseLong(ip[3]);
         return ipLong;
     }
 
@@ -89,8 +89,8 @@ public class IpUtil {
      * 查询 IP 是否在指定 ip 范围之内
      */
     public static boolean isInIpArray(String sourceIp, String[] ipArray) {
-        Long ip = setIP(sourceIp);
-        if (Long.parseLong(ipArray[0]) <= ip && Long.parseLong(ipArray[1]) >= ip) {
+        Integer ip = setIP(sourceIp);
+        if (Integer.parseLong(ipArray[0]) <= ip && Integer.parseLong(ipArray[1]) >= ip) {
             return true;
         }
         return false;

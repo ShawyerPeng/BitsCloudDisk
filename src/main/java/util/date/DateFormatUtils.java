@@ -103,7 +103,7 @@ public class DateFormatUtils {
         if ((date == null) || ("".equals(date.trim())))
             return "";
         try {
-            if (Long.parseLong(date) == 0L)
+            if (Integer.parseLong(date) == 0L)
                 return "";
         } catch (Exception nume) {
             return date;

@@ -915,52 +915,52 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andMemorySizeEqualTo(Long value) {
+        public Criteria andMemorySizeEqualTo(Integer value) {
             addCriterion("memory_size =", value, "memorySize");
             return (Criteria) this;
         }
 
-        public Criteria andMemorySizeNotEqualTo(Long value) {
+        public Criteria andMemorySizeNotEqualTo(Integer value) {
             addCriterion("memory_size <>", value, "memorySize");
             return (Criteria) this;
         }
 
-        public Criteria andMemorySizeGreaterThan(Long value) {
+        public Criteria andMemorySizeGreaterThan(Integer value) {
             addCriterion("memory_size >", value, "memorySize");
             return (Criteria) this;
         }
 
-        public Criteria andMemorySizeGreaterThanOrEqualTo(Long value) {
+        public Criteria andMemorySizeGreaterThanOrEqualTo(Integer value) {
             addCriterion("memory_size >=", value, "memorySize");
             return (Criteria) this;
         }
 
-        public Criteria andMemorySizeLessThan(Long value) {
+        public Criteria andMemorySizeLessThan(Integer value) {
             addCriterion("memory_size <", value, "memorySize");
             return (Criteria) this;
         }
 
-        public Criteria andMemorySizeLessThanOrEqualTo(Long value) {
+        public Criteria andMemorySizeLessThanOrEqualTo(Integer value) {
             addCriterion("memory_size <=", value, "memorySize");
             return (Criteria) this;
         }
 
-        public Criteria andMemorySizeIn(List<Long> values) {
+        public Criteria andMemorySizeIn(List<Integer> values) {
             addCriterion("memory_size in", values, "memorySize");
             return (Criteria) this;
         }
 
-        public Criteria andMemorySizeNotIn(List<Long> values) {
+        public Criteria andMemorySizeNotIn(List<Integer> values) {
             addCriterion("memory_size not in", values, "memorySize");
             return (Criteria) this;
         }
 
-        public Criteria andMemorySizeBetween(Long value1, Long value2) {
+        public Criteria andMemorySizeBetween(Integer value1, Integer value2) {
             addCriterion("memory_size between", value1, value2, "memorySize");
             return (Criteria) this;
         }
 
-        public Criteria andMemorySizeNotBetween(Long value1, Long value2) {
+        public Criteria andMemorySizeNotBetween(Integer value1, Integer value2) {
             addCriterion("memory_size not between", value1, value2, "memorySize");
             return (Criteria) this;
         }
@@ -975,52 +975,52 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andUsedSizeEqualTo(Long value) {
+        public Criteria andUsedSizeEqualTo(Integer value) {
             addCriterion("used_size =", value, "usedSize");
             return (Criteria) this;
         }
 
-        public Criteria andUsedSizeNotEqualTo(Long value) {
+        public Criteria andUsedSizeNotEqualTo(Integer value) {
             addCriterion("used_size <>", value, "usedSize");
             return (Criteria) this;
         }
 
-        public Criteria andUsedSizeGreaterThan(Long value) {
+        public Criteria andUsedSizeGreaterThan(Integer value) {
             addCriterion("used_size >", value, "usedSize");
             return (Criteria) this;
         }
 
-        public Criteria andUsedSizeGreaterThanOrEqualTo(Long value) {
+        public Criteria andUsedSizeGreaterThanOrEqualTo(Integer value) {
             addCriterion("used_size >=", value, "usedSize");
             return (Criteria) this;
         }
 
-        public Criteria andUsedSizeLessThan(Long value) {
+        public Criteria andUsedSizeLessThan(Integer value) {
             addCriterion("used_size <", value, "usedSize");
             return (Criteria) this;
         }
 
-        public Criteria andUsedSizeLessThanOrEqualTo(Long value) {
+        public Criteria andUsedSizeLessThanOrEqualTo(Integer value) {
             addCriterion("used_size <=", value, "usedSize");
             return (Criteria) this;
         }
 
-        public Criteria andUsedSizeIn(List<Long> values) {
+        public Criteria andUsedSizeIn(List<Integer> values) {
             addCriterion("used_size in", values, "usedSize");
             return (Criteria) this;
         }
 
-        public Criteria andUsedSizeNotIn(List<Long> values) {
+        public Criteria andUsedSizeNotIn(List<Integer> values) {
             addCriterion("used_size not in", values, "usedSize");
             return (Criteria) this;
         }
 
-        public Criteria andUsedSizeBetween(Long value1, Long value2) {
+        public Criteria andUsedSizeBetween(Integer value1, Integer value2) {
             addCriterion("used_size between", value1, value2, "usedSize");
             return (Criteria) this;
         }
 
-        public Criteria andUsedSizeNotBetween(Long value1, Long value2) {
+        public Criteria andUsedSizeNotBetween(Integer value1, Integer value2) {
             addCriterion("used_size not between", value1, value2, "usedSize");
             return (Criteria) this;
         }

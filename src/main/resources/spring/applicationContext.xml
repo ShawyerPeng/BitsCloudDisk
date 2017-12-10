@@ -18,56 +18,7 @@
 
     <context:property-placeholder location="classpath:*.properties" ignore-unresolvable="true"/>
 
-    <import resource="classpath:spring/spring-ratelimiter.xml"/>
-
-    <!-- 一. dao -->
-    <!-- 1. 配置数据源 -->
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driver}" />
-        <property name="url" value="${jdbc.url}" />
-        <property name="username" value="${jdbc.username}" />
-        <property name="password" value="${jdbc.password}" />
-        <property name="maxTotal" value="10" />
-        <property name="maxIdle" value="5" />
-    </bean>
-
-    <!-- 2.SqlsessionFactory -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml"/>
-    </bean>
-
-    <!-- 3.MapperScannerConfigurer -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="mapper"/>
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-    </bean>
-
-    <!-- 二. service -->
-    <context:component-scan base-package="service"/>
-
-    <!-- 三. transaction -->
-    <!-- 1. 事务管理器 -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <!-- 2. 通知 -->
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="save*" propagation="REQUIRED"/>
-            <tx:method name="insert*" propagation="REQUIRED"/>
-            <tx:method name="update*" propagation="REQUIRED"/>
-            <tx:method name="delete*" propagation="REQUIRED"/>
-            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
-            <tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
-            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
-        </tx:attributes>
-    </tx:advice>
-
-    <!-- 3.aop -->
-    <aop:config>
-        <aop:advisor advice-ref="txAdvice" pointcut="execution(* service.impl.*.*(..))"/>
-    </aop:config>
+    <import resource="classpath:spring/spring-dao.xml"/>
+    <import resource="classpath:spring/spring-service.xml"/>
 
 </beans>

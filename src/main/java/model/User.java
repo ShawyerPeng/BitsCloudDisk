@@ -1,42 +1,67 @@
 package model;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+@Entity
+@Table(name = "user")
+public class User implements Serializable {
+    private final static long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
+    @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "nickname", nullable = false)
     private String nickname;
 
+    @Column(name = "realname", nullable = false)
     private String realname;
 
+    @Column(name = "gender", nullable = false)
     private Byte gender;
 
+    @Column(name = "phone", nullable = false)
     private String phone;
 
+    @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "iconimg", nullable = false)
     private String iconimg;
 
+    @Column(name = "info", nullable = false)
     private String info;
 
+    @Column(name = "level", nullable = false)
     private Integer level;
 
+    @Column(name = "is_vip", nullable = false)
     private Boolean isVip;
 
-    private Long memorySize;
+    @Column(name = "memory_size", nullable = false)
+    private Integer memorySize;
 
-    private Long usedSize;
+    @Column(name = "used_size", nullable = false)
+    private Integer usedSize;
 
+    @Column(name = "private_status", nullable = false)
     private Boolean privateStatus;
 
+    @Column(name = "private_pass", nullable = false)
     private String privatePass;
 
+    @Column(name = "created_time", nullable = false)
     private Date createdTime;
 
+    @Column(name = "last_login", nullable = false)
     private Date lastLogin;
 
     public User() {
@@ -143,19 +168,19 @@ public class User {
         this.isVip = isVip;
     }
 
-    public Long getMemorySize() {
+    public Integer getMemorySize() {
         return memorySize;
     }
 
-    public void setMemorySize(Long memorySize) {
+    public void setMemorySize(Integer memorySize) {
         this.memorySize = memorySize;
     }
 
-    public Long getUsedSize() {
+    public Integer getUsedSize() {
         return usedSize;
     }
 
-    public void setUsedSize(Long usedSize) {
+    public void setUsedSize(Integer usedSize) {
         this.usedSize = usedSize;
     }
 

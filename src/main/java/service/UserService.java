@@ -1,5 +1,6 @@
 package service;
 
+import dto.UserDTO;
 import model.User;
 
 public interface UserService {
@@ -11,9 +12,9 @@ public interface UserService {
 
     int changePass(String username, String password);
 
-    User getUserByUserId(Integer userId);
+    UserDTO getUserByUserId(Integer userId);
 
-    User getUserByUsername(String username);
+    UserDTO getUserByUsername(String username);
 
     int deleteUser(String username, String password);
 

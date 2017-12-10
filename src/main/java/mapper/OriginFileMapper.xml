@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.OriginFileMapper">
+    <resultMap id="BaseResultMap" type="model.OriginFile">
+        <id column="origin_file_id" property="originFileId" jdbcType="INTEGER"/>
+        <result column="file_md5" property="fileMd5" jdbcType="CHAR"/>
+        <result column="file_size" property="fileSize" jdbcType="BIGINT"/>
+        <result column="file_type" property="fileType" jdbcType="VARCHAR"/>
+        <result column="file_url" property="fileUrl" jdbcType="VARCHAR"/>
+        <result column="file_count" property="fileCount" jdbcType="INTEGER"/>
+        <result column="file_status" property="fileStatus" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        origin_file_id, file_md5, file_size, file_type, file_url, file_count, file_status,
+        create_time, modify_time
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="model.OriginFileExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from origin_file
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from origin_file
+        where origin_file_id = #{originFileId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM origin_file
+        WHERE origin_file_id = #{originFileId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="model.OriginFileExample">
+        delete from origin_file
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="model.OriginFile">
+        INSERT INTO origin_file (origin_file_id, file_md5, file_size,
+                                 file_type, file_url, file_count,
+                                 file_status, create_time, modify_time
+        )
+        VALUES (#{originFileId,jdbcType=INTEGER}, #{fileMd5,jdbcType=CHAR}, #{fileSize,jdbcType=BIGINT},
+                #{fileType,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, #{fileCount,jdbcType=INTEGER},
+                #{fileStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="model.OriginFile">
+        insert into origin_file
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="originFileId != null">
+                origin_file_id,
+            </if>
+            <if test="fileMd5 != null">
+                file_md5,
+            </if>
+            <if test="fileSize != null">
+                file_size,
+            </if>
+            <if test="fileType != null">
+                file_type,
+            </if>
+            <if test="fileUrl != null">
+                file_url,
+            </if>
+            <if test="fileCount != null">
+                file_count,
+            </if>
+            <if test="fileStatus != null">
+                file_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="originFileId != null">
+                #{originFileId,jdbcType=INTEGER},
+            </if>
+            <if test="fileMd5 != null">
+                #{fileMd5,jdbcType=CHAR},
+            </if>
+            <if test="fileSize != null">
+                #{fileSize,jdbcType=BIGINT},
+            </if>
+            <if test="fileType != null">
+                #{fileType,jdbcType=VARCHAR},
+            </if>
+            <if test="fileUrl != null">
+                #{fileUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="fileCount != null">
+                #{fileCount,jdbcType=INTEGER},
+            </if>
+            <if test="fileStatus != null">
+                #{fileStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="model.OriginFileExample" resultType="java.lang.Integer">
+        select count(*) from origin_file
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update origin_file
+        <set>
+            <if test="record.originFileId != null">
+                origin_file_id = #{record.originFileId,jdbcType=INTEGER},
+            </if>
+            <if test="record.fileMd5 != null">
+                file_md5 = #{record.fileMd5,jdbcType=CHAR},
+            </if>
+            <if test="record.fileSize != null">
+                file_size = #{record.fileSize,jdbcType=BIGINT},
+            </if>
+            <if test="record.fileType != null">
+                file_type = #{record.fileType,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fileUrl != null">
+                file_url = #{record.fileUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fileCount != null">
+                file_count = #{record.fileCount,jdbcType=INTEGER},
+            </if>
+            <if test="record.fileStatus != null">
+                file_status = #{record.fileStatus,jdbcType=TINYINT},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.modifyTime != null">
+                modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update origin_file
+        set origin_file_id = #{record.originFileId,jdbcType=INTEGER},
+        file_md5 = #{record.fileMd5,jdbcType=CHAR},
+        file_size = #{record.fileSize,jdbcType=BIGINT},
+        file_type = #{record.fileType,jdbcType=VARCHAR},
+        file_url = #{record.fileUrl,jdbcType=VARCHAR},
+        file_count = #{record.fileCount,jdbcType=INTEGER},
+        file_status = #{record.fileStatus,jdbcType=TINYINT},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="model.OriginFile">
+        update origin_file
+        <set>
+            <if test="fileMd5 != null">
+                file_md5 = #{fileMd5,jdbcType=CHAR},
+            </if>
+            <if test="fileSize != null">
+                file_size = #{fileSize,jdbcType=BIGINT},
+            </if>
+            <if test="fileType != null">
+                file_type = #{fileType,jdbcType=VARCHAR},
+            </if>
+            <if test="fileUrl != null">
+                file_url = #{fileUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="fileCount != null">
+                file_count = #{fileCount,jdbcType=INTEGER},
+            </if>
+            <if test="fileStatus != null">
+                file_status = #{fileStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where origin_file_id = #{originFileId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="model.OriginFile">
+        UPDATE origin_file
+        SET file_md5    = #{fileMd5,jdbcType=CHAR},
+            file_size   = #{fileSize,jdbcType=BIGINT},
+            file_type   = #{fileType,jdbcType=VARCHAR},
+            file_url    = #{fileUrl,jdbcType=VARCHAR},
+            file_count  = #{fileCount,jdbcType=INTEGER},
+            file_status = #{fileStatus,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE origin_file_id = #{originFileId,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="getByFileMd5" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM origin_file
+        WHERE file_md5 = #{fileMd5,jdbcType=CHAR}
+    </select>
+
+</mapper>
