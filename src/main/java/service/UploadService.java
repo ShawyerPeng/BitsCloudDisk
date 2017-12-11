@@ -39,5 +39,5 @@ public interface UploadService extends FileService {
     /**
      * 获取上传到一半的文件的大小，返回给客户端以实现断点续传
      */
-    Integer resume(String fileMd5);
+    Long resume(String fileMd5);
 }

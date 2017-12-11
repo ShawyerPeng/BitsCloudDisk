@@ -77,6 +77,7 @@
           <element id="library" level="project" name="Maven: javax.validation:validation-api:2.0.0.Final" />
           <element id="library" level="project" name="Maven: org.hibernate.validator:hibernate-validator:6.0.5.Final" />
           <element id="library" level="project" name="Maven: org.modelmapper:modelmapper:1.1.1" />
+          <element id="library" level="project" name="Maven: io.jsonwebtoken:jjwt:0.8.0" />
         </element>
       </element>
     </root>

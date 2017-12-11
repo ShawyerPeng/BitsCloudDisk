@@ -114,7 +114,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="model.User" >
+  <insert id="insert" parameterType="model.User" useGeneratedKeys="true" keyProperty="userId">
     insert into user (user_id, username, password, 
       nickname, realname, gender, 
       phone, email, iconimg, 

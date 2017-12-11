@@ -37,6 +37,11 @@ public interface UserFileMapper {
                        @Param("fileName") String fileName, @Param("fileType") String fileType);
 
     /**
+     * 根据目录ID列出文件列表
+     */
+    List<UserFile> listByFolderId(@Param("userId") Integer userId, @Param("folderId") Integer folderId);
+
+    /**
      * 根据父级目录ID列出文件列表
      */
     List<UserFile> listByParentId(@Param("userId") Integer userId, @Param("parentId") Integer parentId);

@@ -1,6 +1,7 @@
 package controller;
 
 import common.RestResult;
+import service.dto.UserDTO;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping
 public class UserController {
     @Autowired
     private UserService userService;
@@ -191,7 +192,7 @@ public class UserController {
         Map<String, Object> data = new HashMap<>();
 
         String username = user.getUsername();
-        User getUser = userService.getUserByUsername(username);
+        UserDTO getUser = userService.getUserByUsername(username);
 
         if (getUser != null) {
             data.put("user", getUser);
@@ -215,7 +216,7 @@ public class UserController {
         Map<String, Object> data = new HashMap<>();
 
         Integer userId = user.getUserId();
-        User getUser = userService.getUserByUserId(userId);
+        UserDTO getUser = userService.getUserByUserId(userId);
 
         if (getUser != null) {
             data.put("user", getUser);

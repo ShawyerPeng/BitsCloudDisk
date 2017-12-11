@@ -6,13 +6,13 @@ $(function(){
  * 单击模态框的文件夹节点时绑定的事件处理函数
  */
 function showSubDir() {
-	var dirID = $(this).attr("data-folder-id");
+	var dirId = $(this).attr("data-folder-id");
 	/* 把操作路径的文件夹ID设为当前点击文件夹的ID */
-	$("#dirbox_path").attr("data-folder-id", dirID);
+	$("#dirbox_path").attr("data-folder-id", dirId);
 
 	/* 判断节点是否存在，如果不存在则生成，存在则显示 */
-	if (getFolderNode(dirID) == null ) {
-		createFolderNode(dirID, false);
+	if (getFolderNode(dirId) == null ) {
+		createFolderNode(dirId, false);
 	} else {
 		toggleExistSubDir($(this));
 	}
@@ -48,13 +48,13 @@ function toggleExistSubDir(dir) {
  * 供file-system.js中的createFolderNode()函数和创建文件夹时调用
  * 生成主页面文件夹节点的同时会生成模态框文件夹节点
  */ 
-function createDirNode(folderID, folders, show) {
-	var dir = $('div[data-folder-id="' + folderID + '"]');
+function createDirNode(folderId, folders, show) {
+	var dir = $('div[data-folder-id="' + folderId + '"]');
 	var subDirs = dir.next();
 	var paddingParam = parseInt(dir.css("padding-left"), 10) + 20 + "px";
 	for (var i = 0; i < folders.length; i++) {
-        var id = folders[i].id;
-        var folderName = folders[i].localName;
+        var id = folders[i].folderId;
+        var folderName = folders[i].folderName;
 		var subNode = $("<li></li>");
 		subNode.append('<div class="treeNode-info"><span class="glyphicon glyphicon-folder-close"></span><span class="treeNode-info-name">' + folderName + '</span></div>');
 		subNode.append('<ul style="display: none;"></ul>');
@@ -63,7 +63,7 @@ function createDirNode(folderID, folders, show) {
 		subNode.find(".treeNode-info").click(showSubDir);
 		subNode.appendTo(subDirs);
 	}
-	/* 因为ajax的原因，判断是否显示的逻辑应该在本函数内实现 */ 
+	// 因为ajax的原因，判断是否显示的逻辑应该在本函数内实现
 	if (show) {
 		toggleExistSubDir(dir);
 	}
@@ -106,5 +106,4 @@ function showFileUploadModal(files) {
 		/* 上传按钮单击后移除所有绑定的事件 */
 		$("#modal_btn_submit").off("click");
 	});
-
 }

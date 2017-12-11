@@ -20,7 +20,7 @@
     <import resource="spring-dao.xml"/>
 
     <!-- 扫描service包下所有使用注解的类型 -->
-    <context:component-scan base-package="service"/>
+    <context:component-scan base-package="service,util"/>
 
     <!-- 事务管理器 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -55,10 +55,5 @@
     <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-    <!-- TransactionManager for Hibernate
-    <bean id="hibernateTransactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"></property>
-        <property name="dataSource" ref="dataSource"></property>
-    </bean> -->
 
 </beans>

@@ -14,7 +14,7 @@ public class LocalFileDO {
     private LocalDateTime ldtCreate;
     
     @Column(name = "ldt_modified", nullable = false)
-    private LocalDateTime ldtModified;
+    private LocalDateTime modifyTime;
     
     @Column(name = "user_id", nullable = false)
     private Integer userID;
@@ -23,10 +23,10 @@ public class LocalFileDO {
     private Integer fileID;
     
     @Column(name = "local_name", nullable = false)
-    private String localName;
+    private String fileName;
     
     @Column(name = "local_type", nullable = false)
-    private String localType;
+    private String fileType;
     
     @Column(name = "parent", nullable = false)
     private Integer parent;
@@ -50,11 +50,11 @@ public class LocalFileDO {
     }
 
     public LocalDateTime getLdtModified() {
-        return ldtModified;
+        return modifyTime;
     }
 
-    public void setLdtModified(LocalDateTime ldtModified) {
-        this.ldtModified = ldtModified;
+    public void setLdtModified(LocalDateTime modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
     public Integer getUserID() {
@@ -74,19 +74,19 @@ public class LocalFileDO {
     }
 
     public String getLocalName() {
-        return localName;
+        return fileName;
     }
 
-    public void setLocalName(String localName) {
-        this.localName = localName;
+    public void setLocalName(String fileName) {
+        this.fileName = fileName;
     }
 
     public String getLocalType() {
-        return localType;
+        return fileType;
     }
 
-    public void setLocalType(String localType) {
-        this.localType = localType;
+    public void setLocalType(String fileType) {
+        this.fileType = fileType;
     }
 
     public Integer getParent() {
@@ -99,8 +99,8 @@ public class LocalFileDO {
 
     @Override
     public String toString() {
-        return "LocalFileDO [id=" + id + ", ldtCreate=" + ldtCreate + ", ldtModified=" + ldtModified + ", userID="
-                + userID + ", fileID=" + fileID + ", localName=" + localName + ", localType=" + localType + ", parent="
+        return "LocalFileDO [id=" + id + ", ldtCreate=" + ldtCreate + ", modifyTime=" + modifyTime + ", userID="
+                + userID + ", fileID=" + fileID + ", fileName=" + fileName + ", fileType=" + fileType + ", parent="
                 + parent + "]";
     }
 }

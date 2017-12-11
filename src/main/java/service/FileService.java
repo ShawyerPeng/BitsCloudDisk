@@ -11,7 +11,7 @@ public interface FileService {
     /**
      * 服务端保存所有文件的根路径
      */
-    String FILE_BASE = "D:/images" + File.separator;
+    String FILE_BASE = "D:" + File.separator + "images" + File.separator;
     /**
      * 所有上传文件URL的根
      */

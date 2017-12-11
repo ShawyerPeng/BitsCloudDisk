@@ -106,7 +106,7 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="model.OriginFile">
+    <insert id="insert" parameterType="model.OriginFile" useGeneratedKeys="true" keyProperty="originFileId">
         INSERT INTO origin_file (origin_file_id, file_md5, file_size,
                                  file_type, file_url, file_count,
                                  file_status, create_time, modify_time

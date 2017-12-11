@@ -1,11 +1,12 @@
 package service.impl;
 
-import dto.UserDTO;
+import service.dto.UserDTO;
 import mapper.UserMapper;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.UserService;
+import util.JwtUtil;
 import util.object.DTOConvertUtil;
 
 @Service
@@ -36,6 +37,19 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String login(String username, String password) {
+        User user = userMapper.selectByUsername(username);
+        if (user == null) {
+            System.out.println("用户名不存在");
+        } else if (user.getPassword().equals(password)) {
+            return JwtUtil.generateToken(username);
+        } else {
+            System.out.println("密码错误");
+        }
+        return "登陆失败";
     }
 
     @Override

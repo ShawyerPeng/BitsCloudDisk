@@ -1,6 +1,6 @@
 package service;
 
-import dto.UserDTO;
+import service.dto.UserDTO;
 import model.User;
 
 public interface UserService {
@@ -21,4 +21,6 @@ public interface UserService {
     int updateUser(User user);
 
     int selectRowCount();
+
+    String login(String username, String password);
 }

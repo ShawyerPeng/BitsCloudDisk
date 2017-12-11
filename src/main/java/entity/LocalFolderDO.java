@@ -15,13 +15,13 @@ public class LocalFolderDO {
     private LocalDateTime ldtCreate;
     
     @Column(name = "ldt_modified", nullable = false)
-    private LocalDateTime ldtModified;
+    private LocalDateTime modifyTime;
     
     @Column(name = "user_id", nullable = false)
     private Integer userID;
     
     @Column(name = "local_name", nullable = false) @NotNull @Size(min=1, max=100)
-    private String localName;
+    private String fileName;
     
     @Column(name = "parent", nullable = false) @NotNull
     private Integer parent;
@@ -45,11 +45,11 @@ public class LocalFolderDO {
     }
 
     public LocalDateTime getLdtModified() {
-        return ldtModified;
+        return modifyTime;
     }
 
-    public void setLdtModified(LocalDateTime ldtModified) {
-        this.ldtModified = ldtModified;
+    public void setLdtModified(LocalDateTime modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
     public Integer getUserID() {
@@ -61,11 +61,11 @@ public class LocalFolderDO {
     }
 
     public String getLocalName() {
-        return localName;
+        return fileName;
     }
 
-    public void setLocalName(String localName) {
-        this.localName = localName;
+    public void setLocalName(String fileName) {
+        this.fileName = fileName;
     }
 
     public Integer getParent() {
@@ -78,8 +78,8 @@ public class LocalFolderDO {
 
     @Override
     public String toString() {
-        return "LocalFolderDO [id=" + id + ", ldtCreate=" + ldtCreate + ", ldtModified=" + ldtModified + ", userID="
-                + userID + ", localName=" + localName + ", parent=" + parent + "]";
+        return "LocalFolderDO [id=" + id + ", ldtCreate=" + ldtCreate + ", modifyTime=" + modifyTime + ", userID="
+                + userID + ", fileName=" + fileName + ", parent=" + parent + "]";
     }
     
 }

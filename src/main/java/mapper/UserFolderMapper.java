@@ -30,6 +30,11 @@ public interface UserFolderMapper {
     int updateByPrimaryKey(UserFolder record);
 
     /**
+     * 根据目录ID列出文件夹列表
+     */
+    List<UserFolder> listByFolderId(@Param("userId") Integer userId, @Param("folderId") Integer folderId);
+
+    /**
      * 根据父级目录ID列出文件夹列表
      */
     List<UserFolder> listByParentId(@Param("userId") Integer userId, @Param("parentId") Integer parentId);

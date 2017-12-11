@@ -1,17 +1,18 @@
 package controller;
 
-import entity.FileDO;
 import model.OriginFile;
 import model.UserFile;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import reqbody.UploadReqBody;
+import controller.reqbody.UploadReqBody;
 import service.DownloadService;
 import service.UploadService;
+import service.UserService;
 import util.validation.ParamChecker;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
@@ -21,8 +22,11 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/file")
+@RequestMapping
+@MultipartConfig
 public class FileController {
+    @Autowired
+    private UserService userService;
     @Autowired
     private UploadService uploadService;
     @Autowired
@@ -39,7 +43,7 @@ public class FileController {
 
     /**
      * 功能：接收分块上传的文件块
-     * 示例：POST api/v1/users/admin/disk/files
+     * 示例：POST users/admin/disk/files
      */
     @RequestMapping(value = "/users/{username}/disk/files", method = RequestMethod.POST)
     public Map<String, Object> upload(HttpServletRequest req, @RequestPart("files[]") Part part, @Valid UploadReqBody reqbody) throws IOException {
@@ -47,7 +51,7 @@ public class FileController {
         System.out.println(req.getHeader("content-range"));
         String contentRange = req.getHeader("content-range");
         
-        /* 检查云盘存储空间是否足够 */
+        // 检查云盘存储空间是否足够
         long size;
         if (contentRange != null) {
             size = Integer.parseInt(contentRange.split("/")[1]);
@@ -58,10 +62,10 @@ public class FileController {
             throw new IllegalArgumentException("Not enough storage to upload this file");
         }
         
-        /* 处理没有Content-Range请求头的小文件 */
+        // 处理没有Content-Range请求头的小文件
         if (contentRange == null && part.getSize() <= MAX_CHUNK_SIZE) {
-            UserFile localFile = modelMapper.map(reqbody, UserFile.class);
-            return uploadService.serveSmallFile(part, reqbody.getFileMd5(), localFile);
+            UserFile userFile = modelMapper.map(reqbody, UserFile.class);
+            return uploadService.serveSmallFile(part, reqbody.getFileMd5(), userFile);
         }
 
         if (isFirstPart(contentRange)) {
@@ -72,9 +76,9 @@ public class FileController {
             file.setFileMd5(reqbody.getFileMd5());
             file.setFileType(part.getHeader("content-type"));
             file.setFileSize(size);
-            UserFile localFile = modelMapper.map(reqbody, UserFile.class);
+            UserFile userFile = modelMapper.map(reqbody, UserFile.class);
             uploadService.savePart(part, reqbody.getFileMd5());
-            return uploadService.serveLastPart(localFile, file);
+            return uploadService.serveLastPart(userFile, file);
         } else {
             uploadService.savePart(part, reqbody.getFileMd5());
             return null;
@@ -82,8 +86,8 @@ public class FileController {
     }
 
     /**
-     * 功能：取消上传<br />
-     * 示例：DELETE api/v1/users/admin/disk/files?cancel=abcd，取消上传md5值为“abcd”的文件
+     * 功能：取消上传
+     * 示例：DELETE users/admin/disk/files?cancel=abcd，取消上传md5值为“abcd”的文件
      */
     @RequestMapping(value = "/users/{username}/disk/files", method = RequestMethod.DELETE, params = "cancel")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -93,21 +97,22 @@ public class FileController {
     }
 
     /**
-     * 功能：获取上传到一半的文件断点<br />
-     * 示例：GET api/v1/users/admin/disk/files?resume=abcd，获取md5值为“abcd”的文件的断点
+     * 功能：获取上传到一半的文件断点
+     * 示例：GET users/admin/disk/files?resume=abcd，获取md5值为“abcd”的文件的断点
      */
     @RequestMapping(value = "/users/{username}/disk/files", method = RequestMethod.GET, params = "resume")
-    public Integer resumeUpload(@RequestParam String resume) {
+    public Long resumeUpload(@RequestParam String resume) {
         // TODO 参数校验
         return uploadService.resume(resume);
     }
 
     /**
-     * 功能：下载<br />
-     * 示例：GET api/v1/users/admin/disk/files?files=1,2&folders=3,4，打包下载ID=1,2的文件和ID=3,4的文件夹
+     * 功能：下载
+     * 示例：GET users/admin/disk/files?files=1,2&folders=3,4，打包下载ID=1,2的文件和ID=3,4的文件夹
      */
     @RequestMapping(value = "/users/{username}/disk/files", method = RequestMethod.GET, params = {"files", "folders"})
-    public void download(@RequestParam List<Integer> files, @RequestParam List<Integer> folders, HttpServletResponse response) throws IOException {
+    public void download(@PathVariable String username, @RequestParam List<Integer> files, @RequestParam List<Integer> folders, HttpServletResponse response) throws IOException {
+        int userId = userService.getUserByUsername(username).getUserId();
         // TODO 参数校验
         if (files.size() + folders.size() == 0) {
             throw new IllegalArgumentException("params must contain at least one file or folder");
@@ -118,7 +123,7 @@ public class FileController {
         response.setContentType("application/octet-stream;");
         response.setHeader("Content-disposition", "attachment; filename=" + filename);
 
-        downloadService.download(files, folders, response.getOutputStream());
+        downloadService.download(userId, files, folders, response.getOutputStream());
     }
 
 

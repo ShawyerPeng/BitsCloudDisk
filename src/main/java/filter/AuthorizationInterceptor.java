@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     /** 受保护资源的根路径 */
-    private static final String API_V1_URI_ROOT = "/OneCloud/api/v1/users/";
+    private static final String API_V1_URI_ROOT = "/users/";
     /** Token的类型 */
     private static final String TOKEN_TYPE_BEARER = "Bearer";
     

@@ -1,4 +1,4 @@
-package dto;
+package service.dto;
 
 import java.util.Date;
 
@@ -26,7 +26,7 @@ public class UserFileDTO extends Sortable {
     /**
      * 文件大小
      */
-    private Integer fileSize;
+    private Long fileSize;
 
     /**
      * 文件URL
@@ -116,11 +116,11 @@ public class UserFileDTO extends Sortable {
         this.deleteTime = deleteTime;
     }
 
-    public Integer getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(Integer fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 

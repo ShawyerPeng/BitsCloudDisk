@@ -107,7 +107,7 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="model.UserFile">
+    <insert id="insert" parameterType="model.UserFile" useGeneratedKeys="true" keyProperty="fileId">
         INSERT INTO user_file (file_id, user_id, parent_id,
                                origin_id, file_name, file_type,
                                file_status, create_time, modify_time,
@@ -301,6 +301,13 @@
         and file_name like #{fileName,jdbcType=VARCHAR}
         and file_type = #{fileType,jdbcType=VARCHAR}
     </select>
+    <!--<select id="listByFolderId" parameterType="map" resultMap="BaseResultMap">-->
+        <!--select-->
+        <!--<include refid="Base_Column_List"/>-->
+        <!--from user_file-->
+        <!--where user_id = #{userId,jdbcType=INTEGER}-->
+        <!--and parent_id = #{parentId,jdbcType=INTEGER}-->
+    <!--</select>-->
     <select id="listByParentId" parameterType="map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

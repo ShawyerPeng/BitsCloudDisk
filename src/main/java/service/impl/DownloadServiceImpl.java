@@ -100,7 +100,7 @@ public class DownloadServiceImpl implements DownloadService {
                     }
                 }
             }
-            /* 往zip里添加空文件夹 */
+            // 往zip里添加空文件夹
             for (String emptyFolder : emptyFolderList) {
                 zos.putNextEntry(new ZipEntry(emptyFolder));
             }
@@ -147,17 +147,17 @@ public class DownloadServiceImpl implements DownloadService {
      * 把两个路径分别作为key（本地）,value（服务器）存入filePathMap中
      *
      * @param parentPath 上一级路径
-     * @param localFile  当前文件实体对象
+     * @param userFile  当前文件实体对象
      */
-    private void generateFilePath(String parentPath, UserFile localFile) {
-        String filename = getFullFilename(localFile);
+    private void generateFilePath(String parentPath, UserFile userFile) {
+        String filename = getFullFilename(userFile);
         String filePath;
         if (parentPath.length() > 0) {
             filePath = parentPath + File.separator + filename;
         } else {
             filePath = filename;
         }
-        OriginFile file = originFileMapper.selectByPrimaryKey(localFile.getFileId());
+        OriginFile file = originFileMapper.selectByPrimaryKey(userFile.getOriginId());
         filePathMap.put(filePath, FILE_BASE + file.getFileMd5());
     }
 }

@@ -1,4 +1,4 @@
-package reqbody;
+package controller.reqbody;
 
 import java.util.List;
 
@@ -10,12 +10,24 @@ public class MoveReqBody {
     public MoveReqBody() {
     }
 
+    public List<Integer> getFiles() {
+        return files;
+    }
+
     public void setFiles(List<Integer> files) {
         this.files = files;
     }
 
+    public List<Integer> getFolders() {
+        return folders;
+    }
+
     public void setFolders(List<Integer> folders) {
         this.folders = folders;
+    }
+
+    public int getDest() {
+        return dest;
     }
 
     public void setDest(int dest) {
@@ -24,6 +36,10 @@ public class MoveReqBody {
 
     @Override
     public String toString() {
-        return "MoveActionForm [files=" + files + ", folders=" + folders + ", dest=" + dest + "]";
+        return "MoveReqBody{" +
+                "files=" + files +
+                ", folders=" + folders +
+                ", dest=" + dest +
+                '}';
     }
 }

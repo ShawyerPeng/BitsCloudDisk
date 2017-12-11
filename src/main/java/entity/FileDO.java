@@ -14,7 +14,7 @@ public class FileDO {
     private LocalDateTime ldtCreate;
     
     @Column(name = "ldt_modified", nullable = false)
-    private LocalDateTime ldtModified;
+    private LocalDateTime modifyTime;
     
     @Column(name = "md5", unique = true, nullable = false)
     private String md5;
@@ -47,11 +47,11 @@ public class FileDO {
     }
 
     public LocalDateTime getLdtModified() {
-        return ldtModified;
+        return modifyTime;
     }
 
-    public void setLdtModified(LocalDateTime ldtModified) {
-        this.ldtModified = ldtModified;
+    public void setLdtModified(LocalDateTime modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
     public String getMd5() {
@@ -88,7 +88,7 @@ public class FileDO {
 
     @Override
     public String toString() {
-        return "FileDO [id=" + id + ", ldtCreate=" + ldtCreate + ", ldtModified=" + ldtModified + ", md5=" + md5
+        return "FileDO [id=" + id + ", ldtCreate=" + ldtCreate + ", modifyTime=" + modifyTime + ", md5=" + md5
                 + ", size=" + size + ", type=" + type + ", url=" + url + "]";
     }
     

@@ -19,7 +19,7 @@ CREATE TABLE `user` (
   `is_vip` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0:不是vip, 1:是vip',
   `memory_size` BIGINT(20) UNSIGNED DEFAULT 1073741824 COMMENT '用户默认内存(1G)',
   `used_size` BIGINT(20) UNSIGNED DEFAULT 0 COMMENT '用户已用内存',
-  `private_status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否开启私密空间（0:未开启，1:已开启）',
+  `private_status` TINYINT(1) DEFAULT 0 COMMENT '是否开启私密空间（0:未开启，1:已开启）',
   `private_pass` VARCHAR(32) COMMENT '私密空间密码',
   `created_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '账号创建时间',
   `last_login` TIMESTAMP NOT NULL DEFAULT '1970-01-02 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '账号最近登录时间'
@@ -29,11 +29,11 @@ INSERT INTO `user` VALUES('admin','123456','users/photo/001.jpg',0,null);
 CREATE TABLE `origin_file` (
   `origin_file_id` INT(11) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '原始文件ID，主键',
   `file_md5` CHAR(32) NOT NULL UNIQUE COMMENT 'md5值',
-  `file_size` INT(11) UNSIGNED NOT NULL COMMENT '文件大小(字节)',
+  `file_size` BIGINT(20) UNSIGNED NOT NULL COMMENT '文件大小(字节)',
   `file_type` VARCHAR(100) NOT NULL DEFAULT 'UNKNOWN' COMMENT '文件的真实类型',
   `file_url` VARCHAR(255) NOT NULL UNIQUE COMMENT '文件保存路径',
-  `file_count` INT(11) UNSIGNED NOT NULL DEFAULT 1 COMMENT '引用计数/文件拥有者数量',
-  `file_status` TINYINT(2) UNSIGNED NOT NULL DEFAULT '1' COMMENT '文件状态[1=正常][2=不允许上传][3=未经允许的上传][4=已屏蔽]',
+  `file_count` INT(11) UNSIGNED DEFAULT 1 COMMENT '引用计数/文件拥有者数量',
+  `file_status` TINYINT(2) UNSIGNED DEFAULT '1' COMMENT '文件状态[1=正常][2=不允许上传][3=未经允许的上传][4=已屏蔽]',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
   `modify_time` TIMESTAMP NOT NULL DEFAULT '1970-01-02 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '文件修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=10000 COMMENT='源文件(多用户共享一份)';

@@ -71,4 +71,6 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
+    <bean id="modelMapper" class="org.modelmapper.ModelMapper"/>
+
 </beans>

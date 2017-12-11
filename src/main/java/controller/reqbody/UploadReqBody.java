@@ -1,4 +1,4 @@
-package reqbody;
+package controller.reqbody;
 
 import javax.validation.constraints.NotNull;
 

@@ -20,7 +20,7 @@ public class OriginFile implements Serializable {
     private String fileMd5;
 
     @Column(name = "file_size", nullable = false)
-    private Integer fileSize;
+    private Long fileSize;
 
     @Column(name = "file_type", nullable = false)
     private String fileType;
@@ -59,11 +59,11 @@ public class OriginFile implements Serializable {
         this.fileMd5 = fileMd5 == null ? null : fileMd5.trim();
     }
 
-    public Integer getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(Integer fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 

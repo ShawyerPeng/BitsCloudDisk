@@ -42,7 +42,7 @@
   		$("#btn_login").click(function(){
   			$.ajax({
           type: "POST",
-          url: "http://localhost:8080/OneCloud/api/v1/authentication",
+          url: "http://localhost:8080/authentication",
           contentType: "application/json; charset=utf-8",
           data: JSON.stringify(getUser()),
           statusCode:{
@@ -57,7 +57,7 @@
             $(".error").text("登录成功");
             sessionStorage.setItem("token", result.token);
             sessionStorage.setItem("user_username", "admin");
-            window.location.href = "http://localhost:8080/OneCloud/home";
+            window.location.href = "http://localhost:8080/home";
           }
         });
   		});

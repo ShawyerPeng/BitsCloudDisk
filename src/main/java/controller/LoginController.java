@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import reqbody.LoginReqBody;
+import controller.reqbody.LoginReqBody;
 import service.UserService;
 
 import javax.validation.Valid;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/login", produces = "application/json", consumes = "application/json")
+@RequestMapping(produces = "application/json", consumes = "application/json")
 public class LoginController {
     @Autowired
     private UserService userService;

@@ -1,4 +1,4 @@
-package reqbody;
+package controller.reqbody;
 
 //import org.springframework.lang.NonNull;
 
@@ -11,7 +11,7 @@ public class RenameFileReqBody {
 
     //@NonNull
     @Size(min = 1, max = 100)
-    private String localType;
+    private String fileType;
 
     public RenameFileReqBody() {
     }
@@ -24,19 +24,19 @@ public class RenameFileReqBody {
         this.fileName = fileName;
     }
 
-    public String getLocalType() {
-        return localType;
+    public String getFileType() {
+        return fileType;
     }
 
-    public void setLocalType(String localType) {
-        this.localType = localType;
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
     }
 
     @Override
     public String toString() {
         return "RenameFileReqBody{" +
                 "fileName='" + fileName + '\'' +
-                ", localType='" + localType + '\'' +
+                ", fileType='" + fileType + '\'' +
                 '}';
     }
 }
