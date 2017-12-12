@@ -25,9 +25,9 @@ public class UserDTO {
 
     private Boolean isVip;
 
-    private Integer memorySize;
+    private Long memorySize;
 
-    private Integer usedSize;
+    private Long usedSize;
 
     private Boolean privateStatus;
 
@@ -123,19 +123,19 @@ public class UserDTO {
         this.isVip = isVip;
     }
 
-    public Integer getMemorySize() {
+    public Long getMemorySize() {
         return memorySize;
     }
 
-    public void setMemorySize(Integer memorySize) {
+    public void setMemorySize(Long memorySize) {
         this.memorySize = memorySize;
     }
 
-    public Integer getUsedSize() {
+    public Long getUsedSize() {
         return usedSize;
     }
 
-    public void setUsedSize(Integer usedSize) {
+    public void setUsedSize(Long usedSize) {
         this.usedSize = usedSize;
     }
 

@@ -1,0 +1,109 @@
+.div_calendar {
+    width: 640px;
+    margin: 0 auto;
+    text-align: center;
+    display: -webkit-box;
+    font-family: Arial;
+    font-size: 30px;
+    background: #fff;
+}
+
+/** 日历标题 */
+.div_calendar_title {
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/** 日历主体 */
+.div_calendar_body {
+    width: 602px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/** 日元素 */
+.div_calendar span {
+    width: 86px;
+    display: inline-block;
+    text-align: center;
+    line-height: 86px;
+}
+
+/** 没有记录 */
+.div_calendar span.no {
+    color: #cbcbcb;
+}
+
+/** 正常 */
+.div_calendar span. {
+    color: #8ecda9;
+}
+
+/** 缺勤 */
+.div_calendar span.normal {
+    color: #8ecda9;
+}
+
+/** 缺勤 */
+.div_calendar span.absense {
+    color: #bfbfbf;
+}
+
+/** 当前日期 */
+.div_calendar span.today {
+    border-radius: 50%;
+    background: #8ecda9;
+}
+
+/** 选中 */
+.div_calendar span.select {
+    border-radius: 50%;
+    background: #39ac6a;
+}
+
+/** 日历第一行日期 */
+.div_calendar .first_div {
+    text-align: right;
+}
+
+/** 日历末行日期 */
+.div_calendar .last_div {
+    text-align: left;
+}
+
+/** 日期显示 div */
+.div_calendar .div_currentDate {
+    text-align: right;
+}
+
+.div_calendar .changeDate {
+    cursor: pointer;
+}
+
+.div_calendar .div_currentDate span {
+    width: inherit;
+}
+
+.div_calendar .div_currentDate span em {
+    margin: 5px;
+}
+
+.div_target_label {
+    width: 400px;
+    margin: 20px auto;
+    text-align: right;
+}
+
+.div_changeMonth {
+    margin: auto auto;
+    text-align: center;
+}
+
+.div_changeMonth span {
+    cursor: pointer;
+}
+
+.div_changeMonth span:last-child {
+    margin-left: 20px;
+}

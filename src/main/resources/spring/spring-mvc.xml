@@ -31,7 +31,42 @@
 
     <!-- 2. 通过 annotation-driven 可以替代处理器映射器和适配器 -->
     <!-- 开启SpringMVC注解模式 -->
-    <mvc:annotation-driven conversion-service="customConversionService"/>
+    <mvc:annotation-driven conversion-service="customConversionService">
+        <!-- 消息转换器，添加对文字编码的全局处理，解决中文返回问号的毛病 -->
+        <!--<mvc:message-converters register-defaults="true">-->
+            <!--<bean id="customMessageConverter"-->
+                  <!--class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
+                <!--<property name="supportedMediaTypes">-->
+                    <!--<list>-->
+                        <!--<value>application/json;charset=UTF-8</value>-->
+                        <!--<value>application/xml</value>-->
+                        <!--<value>application/rss+xml</value>-->
+                        <!--<value>application/pdf</value>-->
+                        <!--<value>application/octet-stream</value>-->
+                        <!--<value>application/x-www-form-urlencoded</value>-->
+                        <!--<value>application/atom+xml</value>-->
+                        <!--<value>text/plain;charset=UTF-8</value>-->
+                        <!--<value>text/html;charset=UTF-8</value>-->
+                        <!--<value>text/xml</value>-->
+                        <!--<value>text/event-stream</value>-->
+                        <!--<value>text/markdown</value>-->
+                        <!--<value>image/jpeg</value>-->
+                        <!--<value>image/png</value>-->
+                        <!--<value>image/gif</value>-->
+                    <!--</list>-->
+                <!--</property>-->
+                <!--<property name="objectMapper">-->
+                    <!--<bean class="com.fasterxml.jackson.databind.ObjectMapper">-->
+                        <!--<property name="dateFormat">-->
+                            <!--<bean class="java.text.SimpleDateFormat">-->
+                                <!--<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>-->
+                            <!--</bean>-->
+                        <!--</property>-->
+                    <!--</bean>-->
+                <!--</property>-->
+            <!--</bean>-->
+        <!--</mvc:message-converters>-->
+    </mvc:annotation-driven>
     <!-- 静态资源默认servlet配置 -->
     <mvc:default-servlet-handler/>
     <bean id="customConversionService"
@@ -42,6 +77,13 @@
             </set>
         </property>
     </bean>
+
+    <mvc:resources mapping="/img/**" location="/img/"/>
+    <mvc:resources mapping="/js/**" location="/js/"/>
+    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/fonts/**" location="/fonts/"/>
+    <mvc:resources mapping="/users/photo/**" location="/users/photo"/>
+    <mvc:resources mapping="/images/**" location="file:D://images/"/>
 
     <!-- 3. 配置视图解析器 ViewResolver -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

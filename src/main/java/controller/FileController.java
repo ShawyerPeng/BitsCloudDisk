@@ -54,7 +54,7 @@ public class FileController {
         // 检查云盘存储空间是否足够
         long size;
         if (contentRange != null) {
-            size = Integer.parseInt(contentRange.split("/")[1]);
+            size = Long.parseLong(contentRange.split("/")[1]);
         } else {
             size = part.getSize();
         }

@@ -59,19 +59,18 @@ function shred() {
                 $('#recycle_folder .recycle-item[data-file-id="' + fileIDArray[i] + '"]').remove();
             }
 
-            /* 更新用户存储空间 */
-            var cap = result.usedCapacity;
-            sessionStorage.setItem("user_usedCapacity", cap);
-            var percentage = getUsedPercentage(cap);
+            // 更新用户存储空间
+            var cap = result.usedSize;
+            sessionStorage.setItem("user_usedSize", cap);
+            var percentage = getUsedPercentage(cap, sessionStorage.getItem("user_memorySize"));
             $("#user_capacity").css("width", percentage).text(percentage);
         }
     });
-
 }
 
 function restore() {
     var selectedItems = getSelectedItems();
-    /* 需要提交的数据 */
+    // 需要提交的数据
     var fileIDArray = new Array();
     var folderIDArray = new Array();
     selectedItems.each(function () {
@@ -110,7 +109,7 @@ function restore() {
                 moveSubDirs.each(function () {
                     var paddingParam = parseInt($(this).css("padding-left"), 10) + paddingAdjustment + "px";
                     $(this).css("padding-left", paddingParam);
-                })
+                });
                 moveDir.parent().appendTo(newParentDir.next());
 
                 moveDir.parent().show();
@@ -128,8 +127,6 @@ function restore() {
                 itemTag.find(".file-time").text(getFormattedDateTime(result.files[i].modifyTime));
                 itemTag.appendTo($('ul[data-folder-id="1"]'));
             }
-
-
         }
     });
 }

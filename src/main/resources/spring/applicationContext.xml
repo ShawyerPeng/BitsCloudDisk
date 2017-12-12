@@ -20,5 +20,6 @@
 
     <import resource="classpath:spring/spring-dao.xml"/>
     <import resource="classpath:spring/spring-service.xml"/>
+    <import resource="classpath:redis/spring-redis.xml"/>
 
 </beans>

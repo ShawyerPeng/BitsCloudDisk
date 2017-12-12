@@ -1,6 +1,5 @@
 package util.validation;
 
-import constant.StorageConst;
 import mapper.UserMapper;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class ParamChecker {
     @Transactional(readOnly = true)
     public boolean isUserStorageEnough(int userId, long fileSize) {
         User user = userMapper.selectByPrimaryKey(userId);
-        if (user.getUsedSize() + fileSize > StorageConst.COMMON_USER_STORAGE_SIZE) {
+        if (user.getUsedSize() + fileSize > user.getMemorySize()) {
             return false;
         }
         return true;

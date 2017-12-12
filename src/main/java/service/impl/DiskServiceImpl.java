@@ -105,17 +105,17 @@ public class DiskServiceImpl implements DiskService {
         //queryParam.put("parent", folderId);
 
         List<UserFolder> folderList = userFolderMapper.listByParentId(userId, folderId);
-        for (UserFolder folder:folderList) {
-            logger.error("!!!!!!!!!!!!!!!!!!!!!!   ParentId:" + folder.getParentId() + "  folderId" + folder.getFolderId());
-        }
+        //for (UserFolder folder:folderList) {
+        //    logger.error("!!!!!!!!!!!!!!!!!!!!!!   ParentId:" + folder.getParentId() + "  folderId" + folder.getFolderId());
+        //}
         List<UserFolderDTO> folderDTOList = convertor.convertFolderList(folderList);
         UserFolderDTO[] folderDTOArray = folderDTOList.toArray(new UserFolderDTO[folderDTOList.size()]);
         //sorter.sort(folderDTOArray, sortType);
 
         List<UserFile> fileList = userFileMapper.listByParentId(userId, folderId);
-        for (UserFile file:fileList) {
-            logger.error("!!!!!!!!!!!!!!!!!!!!!!   " + file.getParentId()+ "  fileId" + file.getFileId());
-        }
+        //for (UserFile file:fileList) {
+        //    logger.error("!!!!!!!!!!!!!!!!!!!!!!   " + file.getParentId()+ "  fileId" + file.getFileId());
+        //}
         List<UserFileDTO> fileDTOList = convertor.convertFileList(fileList);
         UserFileDTO[] fileDTOArray = fileDTOList.toArray(new UserFileDTO[fileDTOList.size()]);
         //sorter.sort(fileDTOArray, sortType);

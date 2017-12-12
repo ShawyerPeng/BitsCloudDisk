@@ -17,7 +17,7 @@
        http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
 
     <!-- 配置数据库相关参数properties -->
-    <context:property-placeholder location="classpath:db.properties"/>
+    <context:property-placeholder location="classpath:db.properties" ignore-unresolvable="true"/>
 
     <!-- 配置数据源 -->
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">

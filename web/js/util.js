@@ -1,6 +1,7 @@
 /* 计算已用空间所占百分比 */
-function getUsedPercentage(bytes) {
-    var percentage = Math.round(bytes / (1024 * 1024 * 10) * 100);// 10MB
+function getUsedPercentage(bytes, all) {
+    // var percentage = Math.round(bytes / (1024 * 1024 * 10) * 100);// 10MB
+    var percentage = Math.round(bytes / all * 100);// 10MB
     return percentage + "%";
 }
 /* 把字节数转为易读的单位 */

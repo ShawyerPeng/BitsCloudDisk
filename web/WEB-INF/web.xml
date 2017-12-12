@@ -19,7 +19,20 @@
         <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
     </listener>
 
-    <!-- 4. 前端控制器 -->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+
+        <!-- 4. 前端控制器 -->
     <servlet>
         <servlet-name>springmvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -35,7 +48,6 @@
             <file-size-threshold>1048576</file-size-threshold>
         </multipart-config>
     </servlet>
-
     <!-- 5.springmvc 配置 servlet -->
     <servlet-mapping>
         <servlet-name>springmvc</servlet-name>

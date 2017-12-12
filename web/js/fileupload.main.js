@@ -1,5 +1,5 @@
 /* 实现文件上传功能 */
-var capacity = 1024 * 1024 * 10;
+var capacity = sessionStorage.getItem("user_memorySize");
 $(function () {
     $("#btn_transfer").click(function () {
         $('[role="presentation"][class="active"]').removeClass("active");
@@ -84,7 +84,7 @@ function updateCompleteCount(plus) {
  * 绑定在模态框上传按钮click上的事件处理函数
  */
 function addFile(e, data, marker) {
-    if ((data.files[0].size + Number(sessionStorage.getItem("user_usedCapacity"))) > capacity) {
+    if ((data.files[0].size + Number(sessionStorage.getItem("user_usedSize"))) > capacity) {
         alert("容量超出上限，无法上传");
         data.abort();
         return;
@@ -145,7 +145,7 @@ function addFile(e, data, marker) {
                 success: function (message) {
                     data.context.remove();
                     updateLoadingCount(false);
-                    /* 如果没有正在进行的任务，则隐藏标题栏 */
+                    // 如果没有正在进行的任务，则隐藏标题栏
                     if ($(".loading_mission_count").first().text() == "") {
                         $("#dynamic_title_loading").hide();
                     }
@@ -182,13 +182,13 @@ function addFile(e, data, marker) {
  *  生成“已完成”的任务节点
  */
 function generateCompletedMissionNode(data) {
-    /* 更新“进行中”区域 */
+    // 更新“进行中”区域
     data.context.remove();
     updateLoadingCount(false);
     if ($(".loading_mission_count").first().text() == "") {
         $("#dynamic_title_loading").css("display", "none");
     }
-    /* 更新“已完成”区域 */
+    // 更新“已完成”区域
     updateCompleteCount(true);
     $("#dynamic_title_complete").css("display", "block");
     var missionNode = $("<li></li>");
@@ -209,10 +209,10 @@ function generateCompletedMissionNode(data) {
 }
 /* 上传结束后，生成所有所需的节点 */
 function finishUpload(data) {
-    /* 修改用户容量 */
-    var cap = data.result.user.usedCapacity
-    sessionStorage.setItem("user_usedCapacity", cap);
-    var percentage = getUsedPercentage(cap);
+    // 修改用户容量
+    var cap = data.result.user.usedSize;
+    sessionStorage.setItem("user_usedSize", cap);
+    var percentage = getUsedPercentage(cap, sessionStorage.getItem("user_memorySize"));
     $("#user_capacity").css("width", percentage).text(percentage);
 
     generateCompletedMissionNode(data);

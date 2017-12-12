@@ -8,9 +8,11 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import service.UserService;
+import util.encrypt.Md5Util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 @RequestMapping
@@ -23,6 +25,10 @@ public class UserController {
     public RestResult register(@RequestBody User user) {
         String username = user.getUsername();
         String password = user.getPassword();
+        //String salt = UUID.randomUUID().toString();
+        //// 密码加盐
+        //user.setSalt(salt);
+        //user.setPassword(Md5Util.md5(user.getPassword() + salt));
 
         RestResult result = new RestResult();
         Map<String, Object> data = new HashMap<>();
@@ -59,6 +65,7 @@ public class UserController {
     public RestResult login(@RequestBody User user) {
         String username = user.getUsername();
         String password = user.getPassword();
+        //password = Md5Util.md5(user.getPassword() + user.getSalt());
 
         RestResult result = new RestResult();
         Map<String, Object> data = new HashMap<>();

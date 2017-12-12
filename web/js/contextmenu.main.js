@@ -162,7 +162,7 @@ function checkDuplicateName(itemTag, newName) {
 /************************************* 删除 *************************************/
 function remove() {
     var selectedItems = getSelectedItems();
-    /* 需要提交的数据 */
+    // 需要提交的数据
     var fileIdArray = new Array();
     var folderIdArray = new Array();
     selectedItems.each(function () {

@@ -1,5 +1,5 @@
 $(function(){
-	/* 为根节点绑定事件处理函数 */
+	// 为根节点绑定事件处理函数
 	$(".dirbox-body .treeNode-info").click(showSubDir);
 });
 /*
@@ -7,10 +7,10 @@ $(function(){
  */
 function showSubDir() {
 	var dirId = $(this).attr("data-folder-id");
-	/* 把操作路径的文件夹ID设为当前点击文件夹的ID */
+	// 把操作路径的文件夹ID设为当前点击文件夹的ID
 	$("#dirbox_path").attr("data-folder-id", dirId);
 
-	/* 判断节点是否存在，如果不存在则生成，存在则显示 */
+	// 判断节点是否存在，如果不存在则生成，存在则显示
 	if (getFolderNode(dirId) == null ) {
 		createFolderNode(dirId, false);
 	} else {
@@ -21,7 +21,7 @@ function showSubDir() {
  * 显示/隐藏已经生成过的子文件夹并更新操作路径
  */
 function toggleExistSubDir(dir) {
-	/* 更新文件夹图标 */
+	// 更新文件夹图标
 	var icon = dir.find(".glyphicon");
 	if (icon.hasClass("glyphicon-folder-open")) {
 		icon.removeClass("glyphicon-folder-open");
@@ -30,9 +30,9 @@ function toggleExistSubDir(dir) {
 		icon.removeClass("glyphicon-folder-close");
 		icon.addClass("glyphicon-folder-open");			
 	}
-	/* 显示或隐藏子文件夹 */
+	// 显示或隐藏子文件夹
 	dir.next().slideToggle("fast");
-	/* 更新操作路径 */
+	// 更新操作路径
 	var path = dir.find(".treeNode-info-name").text();
 	if (path != "我的网盘") {
 		var parentNode = dir;
@@ -73,7 +73,7 @@ function createDirNode(folderId, folders, show) {
  * 模态框取消按钮和x按钮绑定的事件处理函数
  */ 
 function removeAddedMission() {
-	/* 移除所有可操作按钮绑定的事件 */
+	// 移除所有可操作按钮绑定的事件
 	$("#modal_btn_submit").off("click");
 	$("#modal_btn_cancel").off("click");
 	$("#modal_btn_close").off("click");
@@ -88,7 +88,7 @@ function showFileUploadModal(files) {
 
 	var firstFilename = files[0].name;
 	var nums = files.length;
-	/* 显示要上传的文件信息和数量 */
+	// 显示要上传的文件信息和数量
 	$("#modal_file_thumb").attr("src", getFileIcon(getSuffix(firstFilename)));
 	$("#modal_file_name").text(firstFilename);
 	if (nums == 1) {
@@ -97,13 +97,12 @@ function showFileUploadModal(files) {
 		$("#modal_addtional_info span").text(nums);
 		$("#modal_addtional_info").show();
 	}
-	
 	$("#path_modal").modal("show");
 	$("#modal_btn_cancel").click(removeAddedMission);
 	$("#modal_btn_close").click(removeAddedMission);
 	$("#modal_btn_submit").click(function() {
 		$("#path_modal").modal("hide");
-		/* 上传按钮单击后移除所有绑定的事件 */
+		// 上传按钮单击后移除所有绑定的事件
 		$("#modal_btn_submit").off("click");
 	});
 }

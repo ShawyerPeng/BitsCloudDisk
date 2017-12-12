@@ -123,4 +123,8 @@ public class EncryptAndDecryptUtils {
 
         return result;
     }
+
+    public static void main(String[] args) {
+        System.out.println(EncryptAndDecryptUtils.md5Encrypt("pengxiaoye"));
+    }
 }

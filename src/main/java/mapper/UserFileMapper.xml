@@ -337,7 +337,7 @@
         and parent_id != 3
         and user_id = #{userId,jdbcType=INTEGER}
         and
-        <foreach collection="localTypes" item="fileType" open="(" close=")" separator=" or ">
+        <foreach collection="fileTypes" item="fileType" open="(" close=")" separator=" or ">
             file_type = #{fileType,jdbcType=VARCHAR}
         </foreach>
     </select>

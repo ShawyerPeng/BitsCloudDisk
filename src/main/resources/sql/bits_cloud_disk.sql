@@ -80,6 +80,21 @@ CREATE TABLE `share` (
   CONSTRAINT UserID_ShareFile_FK FOREIGN KEY () References UserInfo(UserID) -- 设置 UserID 为外键
 ) ENGINE=InnoDB AUTO_INCREMENT=825 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='文件分享表';
 
+
+CREATE TABLE `signin` (
+  `id` INT(11) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `user_id` INT(11) UNSIGNED NOT NULL COMMENT '用户ID',
+  `sign_count` int(11) DEFAULT NULL COMMENT '连续签到次数',
+  `before_rank` varchar(32) CHARACTER SET utf8 DEFAULT NULL COMMENT '前天签到排名',
+  `yesterday_rank` varchar(32) CHARACTER SET utf8 DEFAULT NULL COMMENT '昨天签到排名',
+  `today_rank` varchar(32) CHARACTER SET utf8 DEFAULT NULL COMMENT '今天签到排名',
+  `sign_history` bigint(4) DEFAULT NULL COMMENT '签到历史，bit位数表示历史签到',
+  `modify_time` datetime DEFAULT NULL COMMENT '签到时间(也即修改时间)',
+  `ext` varchar(32) DEFAULT NULL COMMENT '预留字段',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=825 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='每日签到表';
+
+
 -- 插入 / 更新 / 插入日志表
 Create table `UpdateLog` (
   UserID varchar(30) not null,   -- 用户 ID，外键
