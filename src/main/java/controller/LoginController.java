@@ -28,6 +28,8 @@ public class LoginController {
         String token = userService.login(reqBody.getUsername(), reqBody.getPassword());
 
         Map<String, Object> result = new HashMap<>();
+        if (token.equals("登陆失败"))
+            result.put("status_code", 401);
         result.put("token", token);
         return result;
     }

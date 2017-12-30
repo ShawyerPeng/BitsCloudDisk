@@ -17,4 +17,9 @@ public class ViewController {
     public ModelAndView getHomeView() {
         return new ModelAndView("/home");
     }
+
+    @RequestMapping(value = "note", method = RequestMethod.GET)
+    public ModelAndView getNoteView() {
+        return new ModelAndView("/note");
+    }
 }

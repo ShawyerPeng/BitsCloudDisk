@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="account.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container main">
+
+    <div class="row">
+        <div class="tabbable offset1 span10">
+            <ul id="mytabs" class="nav nav-tabs">
+                <li class="active"><a href="https://www.jianguoyun.com/d/account#info" data-toggle="tab">账户信息</a></li>
+                <li class=""><a href="https://www.jianguoyun.com/d/account#flowrate" data-toggle="tab">使用情况</a></li>
+                <li class=""><a href="https://www.jianguoyun.com/d/account#safe" data-toggle="tab">安全选项</a></li>
+            </ul>
+
+            <div class="tab-content">
+
+                <div id="info" class="tab-pane active">
+                    <h4>基本信息</h4>
+                    <div class="box-content">
+                        <table>
+                            <tbody><tr id="current-email-row">
+                                <td class="name">电子邮箱</td>
+                                <td class="text" id="currentemail"> 1002097607@qq.com </td>
+                                <td class="action">
+                                    <a id="modify-email" href="https://www.jianguoyun.com/d/account#">修改邮箱</a>
+                                    <span id="modify_email_success" class="modify_email_info modify_success_info">修改邮箱成功</span>
+                                </td>
+                            </tr>
+
+                            <tr id="modify-email-row">
+                                <td class="name">电子邮箱</td>
+                                <td class="text">
+                                    <input id="input-email" type="text" size="30" name="email_name" class="span3">
+                                </td>
+                                <td class="action">
+                                    <a class="save-email btn btn-success" href="https://www.jianguoyun.com/d/account#">确定</a> &nbsp;
+                                    <a class="cancel-email btn btn-default" href="https://www.jianguoyun.com/d/account#">取消</a>
+                                    <span class="info-error modify_failed_info">邮箱格式错误</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="name">登录密码</td>
+                                <td class="text"> ****** </td>
+                                <td class="action">
+                                    <a id="modify_passcode" href="https://www.jianguoyun.com/d/account#">修改密码</a>
+                                    <span id="modify_pwd_success" class="modify_success_info">您已经成功修改了密码</span>
+                                </td>
+                            </tr>
+
+                            <tr id="current-nick-row">
+                                <td class="name">称呼</td>
+                                <td class="text"><span id="currentnick"></span></td>
+                                <td class="action">
+                                    <a id="modify-nick" href="https://www.jianguoyun.com/d/account#">修改称呼</a>
+                                    <span id="modify_nick_success" class="modify_success_info">修改称呼成功</span>
+                                </td>
+                            </tr>
+
+                            <tr id="modify-nick-row">
+                                <td class="name">称呼</td>
+                                <td class="text">
+                                    <input id="input-nick" type="text" size="30" name="nickname" class="span3">
+                                </td>
+                                <td class="action">
+                                    <a id="save-nick" class="btn btn-success" href="https://www.jianguoyun.com/d/account#">确定</a> &nbsp;
+                                    <a id="cancel-nick" class="btn btn-default" href="https://www.jianguoyun.com/d/account#">取消</a>
+                                    <span id="info-error" class="modify_failed_info">修改称呼成功</span>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td class="name">账户类型</td>
+                                <td class="name" id="account_type">免费版</td>
+                                <td class="action">
+                                    <a class="btn btn-success nodisp" href="https://www.jianguoyun.com/s/pricing" id="upgrade-button" style="display: inline-block;">账户升级</a>
+                                </td>
+                            </tr>
+
+                            <tr id="valid_time" style="display: none;">
+                                <td class="name">账户有效期至</td>
+                                <td class="name"></td>
+                                <td class="action">
+                                    <a class="btn btn-success" href="https://www.jianguoyun.com/s/pricing" id="renew">账户升级</a>
+                                    <a class="btn btn-default nodisp" id="degrade-button">转为免费版</a> &nbsp;
+                                </td>
+                            </tr>
+
+                            </tbody></table>
+                    </div>
+                </div>
+
+                <div id="flowrate" class="tab-pane">
+                    <div id="flowrate-status">
+                        <div id="space-portion" class="nodisp">
+                            <div class="flowrate-block">
+                                <p></p><h4>存储空间</h4><p></p>
+                                <div id="upload-bar" class="bar-graph">
+                                    <span class="bar-text">% &nbsp; (/)</span>
+                                    <div class="bar-block" style="width:%"></div>
+                                </div>
+                                <div class="legend-line">
+                                    <span class="bar-graph-legend legend-used">&nbsp;</span>&nbsp;<span>已使用 </span>
+                                    <span class="bar-graph-legend legend-free">&nbsp;</span>&nbsp;<span>剩余可用 </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="flowrate-portion" class="nodisp" style="display: block;">
+                            <div class="flowrate-block">
+                                <p></p><h4>上传流量</h4><p></p>
+                                <div id="upload-bar" class="bar-graph">
+                                    <span class="bar-text">0% &nbsp; (0 Bytes / 1 GB)</span>
+                                    <div class="bar-block" style="width:0%"></div>
+                                </div>
+                                <div class="legend-line">
+                                    <span class="bar-graph-legend legend-used">&nbsp;</span>&nbsp;<span>已使用 0 Bytes</span>
+                                    <span class="bar-graph-legend legend-free">&nbsp;</span>&nbsp;<span>剩余可用 1 GB</span>
+                                </div>
+                            </div>
+
+                            <div class="flowrate-block">
+                                <p></p><h4>下载流量</h4><p></p>
+                                <div id="download-bar" class="bar-graph">
+                                    <span class="bar-text">0% &nbsp; (0 Bytes / 3 GB)</span>
+                                    <div class="bar-block" style="width:0%"></div>
+                                </div>
+                                <div class="legend-line">
+                                    <span class="bar-graph-legend legend-used">&nbsp;</span>&nbsp;<span class="legend-text">已使用 0 Bytes</span>
+                                    <span class="bar-graph-legend legend-free">&nbsp;</span>&nbsp;<span class="legend-text">剩余可用 3 GB</span>
+                                </div>
+                            </div>
+
+                            <div id="total-space">
+                                <p>总计上传流量：<span>0 Bytes</span>&nbsp;&nbsp;&nbsp;总计下载流量：<span>0 Bytes</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="safe" class="tab-pane">
+                    <h4>手机身份验证</h4>
+                    <div class="box-content" id="tfauth-panel">
+                        <div class="box-section">
+                            <div id="passcode-alert" class="alert alert-error text-center" style="display: none;"></div>
+                            <div id="passcode-alert-time" class="alert alert-info text-center" style="display: none;"></div>
+                            <div id="tfauth-info">
+                                <div id="disable_btn_filed">
+
+                                    <div id="tfauth-status-field" style="">
+                                        <div class="status">开启后，登录时需通过手机验证身份，可防止因密码丢失引起的文件泄露 <a href="http://help.jianguoyun.com/?p=1251" target="_blank">更多详情</a></div>
+                                        <div>
+                                            <span>状态：</span>
+                                            <span class="status-text">未启用</span>
+                                        </div>
+                                        <div class="number-row" style="display: none;">
+                                            <span>手机：</span>
+                                            <span class="status-text phone-number">未启用</span>
+                                            <a href="https://www.jianguoyun.com/d/account#" id="unbind-number-link">关闭验证</a>
+                                        </div>
+
+                                        <div>
+                                            <a class="btn btn-default disable-button" style="margin-right: 20px;display:none;">关闭</a>
+                                            <a class="btn btn-default enable-button" style="margin-right: 20px;" href="https://www.jianguoyun.com/d/enable_tfauth">开启</a>
+                                        </div>
+                                    </div>
+
+                                    <div style="display:none" id="fill_in_form">
+                                        <table>
+                                            <tbody><tr>
+                                                <td class="name">
+                                                    <label for="authen_passcode">验证码</label>
+                                                </td>
+                                                <td class="text">
+                                                    <input id="authen_passcode" name="authen_passcode" class="span3" size="30">
+                                                </td>
+                                                <td class="action">
+                                                    <button class="btn btn-success auth-close-btn">验证并关闭</button>
+                                                    <button class="btn btn-default cancel-btn">取消</button>
+                                                </td>
+                                            </tr>
+                                            </tbody></table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>退出设备登录</h4>
+                    <div class="box-content">
+                        <div class="box-section">
+                            <div class="status">为了避免设备丢失后，账户信息及文件处于不安全状态，您可以在此强制登出所有本账号下的所有设备。</div>
+                            <a id="unlink-devices-btn" href="https://www.jianguoyun.com/d/ajax/resetSessionToken">退出所有设备登录</a>
+                        </div>
+                    </div>
+
+                    <h4>第三方应用管理</h4>
+                    <div class="box-content">
+                        <div class="box-section">
+                            <div class="status">用于授权第三方 WebDAV 应用访问您的云空间。</div>
+                            <div class="example">
+                                <h5>示例</h5>
+                                <ul class="input-list">
+                                    <li class="input-item">
+                                        <span class="item-name">服务器地址：</span>
+                                        <span class="item-value">https://dav.jianguoyun.com/dav/</span>
+                                    </li>
+                                    <li class="input-item">
+                                        <span class="item-name"> 账户：</span>
+                                        <span class="item-value">1002097607@qq.com</span>
+                                    </li>
+                                    <li class="input-item">
+                                        <span class="item-name"> 密码：</span>
+                                        <span class="item-value">(应用密码)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <table id="app-list" class="hide">
+                                <tbody><tr>
+                                    <th class="name"> 应用名称</th>
+                                    <th class="date">授权日期</th>
+                                    <th class="password">应用密码</th>
+                                    <th></th>
+                                </tr>
+                                <tr class="hide" data-unique-name="" id="app-pwd-template">
+                                    <td class="name"></td>
+                                    <td class="date"></td>
+                                    <td class="password"><span class="hide detail"></span><a class="show-pwd" href="https://www.jianguoyun.com/d/account#">显示</a></td>
+                                    <td class="delete">
+                                        <a data-app-name="" href="https://www.jianguoyun.com/d/account#" class="app-psw-delete">撤消授权</a>
+                                    </td>
+                                </tr>
+                                </tbody></table>
+                            <div id="app-none">您当前未授权任何第三方应用</div>
+                        </div>
+                        <div class="pwd-creation-tip">
+                            <a id="create-pwd" href="https://www.jianguoyun.com/d/account#">添加应用密码</a>
+                        </div>
+                        <div id="pwd-input-panel" class="hide">
+                            <div class="step1 clearfix">
+                                <div>第一步，请输入名称，以帮助您记住使用该密码的应用，例如 iWorks</div>
+                                <div class="input-container">
+                                    <div class="input-label">名称：</div>
+                                    <div class="input-controls">
+                                        <input id="new-app-name" name="new-app-name" type="text" maxlength="18" size="18" class="span3">
+                                        <a class="btn btn-success" id="generate-new-psw">生成密码</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="step2 clearfix">
+                                <div>第二步，请将以下生成的密码输入到支持 WebDav 的应用中。</div>
+                                <div class="input-container">
+                                    <div class="input-label">密码：</div>
+                                    <div class="input-controls">
+                                        <span class="displayed-psw"></span>
+                                        <a class="btn btn-success" id="generate-pwd-done">完成</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/lib/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="/js/info/jquery.placeholder-2.0.7.js" type="text/javascript"></script>
+<script src="/js/info/bootstrap-landing.min.js" type="text/javascript"></script>
+<script src="/js/info/bootstrap-tabs.js" type="text/javascript"></script>
+<script src="/js/info/modernizr.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="lib2.min.js"></script>
+<script src="/js/info/account.min.js" type="text/javascript"></script>
+</body>
+</html>

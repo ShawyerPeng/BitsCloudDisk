@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑笔记</title>
+    <link href="/editormd/css/editormd.css" rel="stylesheet" type="text/css"/>
+    <style>
+        h1 {
+            text-align: center;
+        }
+        input[type='submit'] {
+            width: 100px;
+            height: 50px;
+            color: #fff;
+            background-color: #90DBFF;
+            position: fixed;
+            bottom: 0px;
+            left: 45%;
+        }
+    </style>
+</head>
+<body>
+<form>
+    <input type="hidden" name="id" value="${note.id}">
+    <div class="editormd" id="editormd">
+        <textarea class="editormd-markdown-textarea" name="content" id="content"></textarea>
+        <!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
+        <!-- html textarea 需要开启配置项 saveHTMLToTextarea == true -->
+        <textarea class="editormd-html-textarea" name="preview" id="preview"></textarea>
+    </div>
+    <br>
+    <button type="button" id="save_note" value="保存">保存</button>
+</form>
+</body>
+<script type="text/javascript" src="/script/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/script/editormd/editormd.min.js"></script>
+<script type="text/javascript">
+    var editor;
+    editor = $(function () {
+        editormd("editormd", {
+            width: "90%",
+            height: 740,
+            path: "/editormd/lib/",
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL: "/image/upload",
+//            editorTheme: "pastel-on-dark",
+//            theme: "gray",
+//            previewTheme: "dark",
+            codeFold: true,
+            syncScrolling : true,
+            searchReplace : true,
+            imageUpload: true,
+            emoji: true,
+            taskList: true,
+            tocm: true,
+            tex: true,
+            flowChart: true,
+            sequenceDiagram: true,
+            saveHTMLToTextarea: true,
+            onload : function() {
+                console.log('onload', this);
+            }
+        });
+    });
+</script>
+<script>
+    var result;
+    $("#save_note").click(function () {
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify({
+                title:"你好",
+                content: $("#content").val()
+            }),
+            dataType: "json",
+            contentType: "application/json;charset=UTF-8",
+            url: "/users/" + sessionStorage.getItem("user_username") + "/note/insert",
+            success: function (data) {
+                result = data;
+                console.log(data);
+                console.log(data.data);
+                sessionStorage.setItem("note_id", data.data.id);
+                loadNote();
+            }
+        });
+    });
+    $(document).ready(function() {
+        if (sessionStorage.getItem("note_id") != null) {
+            loadNote();
+        }
+    });
+
+    function loadNote() {
+        $.ajax({
+            type: "GET",
+            url: "/users/" + sessionStorage.getItem("user_username") + "/note/" + sessionStorage.getItem("note_id"),
+            success: function (data) {
+                $("#content").text(data.content);
+            }
+        });
+    }
+</script>
+</html>

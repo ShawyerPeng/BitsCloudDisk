@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>笔记详情</title>
+    <link href="/editormd/css/editormd.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        a {
+            padding: 20px;
+            font-size: 2em;
+        }
+    </style>
+</head>
+<body>
+<div id="markdownView" style="width: 95%" class="editormd-preview-theme-dark">
+    <textarea style="display:none;" name="content"></textarea>
+</div>
+
+<br><br><br><br>
+<a href="/users/{username}/note/{id}/edit/${data.article_id}/edit">去编辑</a><br>
+<a href="<%=path%>/">去新增</a>
+
+<!-- editormd start -->
+<script type="text/javascript" src="/editormd/editormd.min.js"></script>
+<script src="/editormd/lib/marked.min.js"></script>
+<script src="/editormd/lib/prettify.min.js"></script>
+<script src="/editormd/lib/raphael.min.js"></script>
+<script src="/editormd/lib/underscore.min.js"></script>
+<script src="/editormd/lib/sequence-diagram.min.js"></script>
+<script src="/editormd/lib/flowchart.min.js"></script>
+<script src="/editormd/lib/jquery.flowchart.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var markdownView;
+        markdownView = editormd.markdownToHTML("markdownView", {
+            emoji: true,
+            taskList: true,
+            tex: true,
+            flowChart: true,
+            sequenceDiagram: true,
+            previewTheme: "dark"
+        });
+
+        var url = window.location.href;
+//        var exp = "/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/";
+        var arrUrl = url.split("/");
+        // 获取id
+        var id = arrUrl[4];
+        alert(id);
+//        alert(GetQueryString("id"));
+
+        $.ajax({
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            url: "/users/" + sessionStorage.getItem("user_username") + "/note/" + sessionStorage.getItem("note_id"),
+            success: function (data) {
+                $("#content").text(data.content);
+            }
+        });
+    });
+
+
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)return unescape(r[2]);
+        return null;
+    }
+</script>
+</body>
+</html>

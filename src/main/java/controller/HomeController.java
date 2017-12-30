@@ -118,7 +118,7 @@ public class HomeController {
      * 示例：POST users/admin/disk/folders，请求体：{"folderName":"新建文件夹","parentId":5}，
      * 在ID=5的文件夹下新建一个名字为“新建文件夹”的文件夹
      */
-    @RequestMapping(value = "/users/{username}/disk/folders/new", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/{username}/disk/folders", method = RequestMethod.POST)
     public UserFolderDTO newFolder(@PathVariable String username, @RequestBody @Valid UserFolder reqBody) {
         // TODO 参数校验
         int userId = userService.getUserByUsername(username).getUserId();

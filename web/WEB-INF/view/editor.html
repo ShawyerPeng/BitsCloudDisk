@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>wangEditor demo</title>
+    <link rel="stylesheet" type="text/css" href="/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/iconfont/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="/lib/font-awesome/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/layui/layui.css"/>
+    <script type="text/javascript" src="/lib/bootstrap/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/lib/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/layui/layui.js"></script>
+    <script type="text/javascript" src="/lib/wangEditor/wangEditor.min.js"></script>
+    <script type="text/javascript" src="/lib/ddsort/ddsort.js"></script>
+
+</head>
+<css>
+    <style type="text/css" role="main">
+        body, html {
+            background: #3f3f3f;
+        }
+
+        body {
+            font-family: -apple-system, SF UI Text, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
+            position: relative;
+        }
+
+        .shutdown {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            color: white;
+            text-align: center;
+            z-index: 10000;
+            opacity: 0.8;
+            display: none;
+            padding: 12px 0px 13px;
+            background: rgb(4, 156, 219);
+        }
+
+        .shutdown i {
+            position: fixed;
+            top: 15px;
+            right: 9px;
+            padding: 0 4px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .aside {
+            border: 1px solid;
+            padding: 0 0;
+        }
+
+        .middle {
+            min-width: 200px;
+            border: 1px solid;
+            padding: 0;
+        }
+
+        .right {
+            min-width: 200px;
+            border: 1px solid;
+            padding: 20px 0 0 0;
+        }
+
+        .normal-mode {
+            height: 100%;
+        }
+
+        #editor {
+
+        }
+
+        .w-e-droplist {
+            z-index: 10003;
+        }
+
+        .rename-notebook-modal {
+            z-index: 10005;
+        }
+    </style>
+    <style type="text/css" role="aside">
+        .aside {
+            background: #2f2f2f;
+        }
+
+        #cont {
+            border: 5px solid #eeeeee;
+        }
+
+        .normal-mode .aside a {
+            text-decoration: none;
+        }
+
+        .normal-mode .home-wrap {
+            padding: 30px 19px 5px 18px;
+            text-align: center;
+        }
+
+        .normal-mode .home-wrap .go-home {
+            padding: 9px 0;
+            font-size: 15px;
+            color: #a3cf62;
+            border: 1px solid rgba(163, 207, 98, 0.7);
+            border-radius: 20px;
+            display: block;
+            transition: 0.1s ease;
+            -webkit-transition: 0.1s ease;
+        }
+
+        .normal-mode .home-wrap .go-home {
+            border: 1px solid rgba(163, 207, 0, 0.9);
+        }
+
+        .normal-mode .home-wrap span {
+            vertical-align: middle;
+        }
+
+        .normal-mode .new-notebook {
+            padding: 0 15px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .normal-mode .new-notebook .create-notebook {
+            font-size: 11px;
+            font-weight: normal;
+            line-height: 20px;
+            color: #b1b1b1;
+        }
+
+        .normal-mode .new-notebook .new-notebook-form {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .normal-mode .new-notebook .notebook-input {
+            width: 100%;
+            height: 35px;
+            border: 1px #2f2f2f;
+            box-sizing: border-box;
+            background-color: #555555;
+            color: #999999;
+            border-radius: 4px;
+            vertical-align: middle;
+            padding: 4px 6px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        .normal-mode .new-notebook .submit {
+            float: left;
+            background: none;
+            border-color: #34ab20;
+            border-radius: 20px;
+            color: #34ab20;
+            padding: 5px 20px;
+            outline: none;
+        }
+
+        .normal-mode .new-notebook .submit:hover {
+            background-color: rgba(52, 171, 32, 0.1);
+        }
+
+        .normal-mode .new-notebook .cancel {
+            padding-top: 6px;
+            color: #969696;
+        }
+
+        .normal-mode .new-notebook .cancel:hover {
+            color: #fff;
+        }
+
+        .normal-mode .notebooks {
+            font-size: 15px;
+            font-weight: normal;
+            line-height: 20px;
+        }
+
+        .notebooks {
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+        }
+
+        .notebooks li {
+            position: relative;
+            line-height: 27px;
+        }
+
+        .notebooks li a {
+            position: relative;
+            line-height: 27px;
+            color: #b1b1b1;
+            display: inline-block;
+            padding: 10px 15px;
+            -webkit-transition: all .1s ease;
+        }
+
+        .aside .notebooks .active {
+            background-color: #222222;
+        }
+
+        .aside .notebooks > li:hover {
+            text-decoration: none;
+            background-color: #222222;
+        }
+
+        .aside .notebooks > li .notebook-name {
+            /* width: 70%; */
+        }
+
+        .notebooks .active > .notebook-name, .notebooks .active > .notebook-name:hover {
+            border-left: 3px solid #ec7259;
+        }
+
+        .notebooks .active .dropdown-toggle {
+            display: block;
+        }
+
+        .notebooks .edit-notebook {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            padding: 0;
+            background: none;
+            display: none;
+        }
+
+        .nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
+            background: none;
+            border: none;
+        }
+
+        .nav > li > a:focus {
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        .dropdown-menu {
+            left: auto;
+            right: 0px;
+            background-color: #3f3f3f;
+            border-color: #2f2f2f;
+        }
+
+        .dropdown-menu > li > a {
+            color: #c8c8c8;
+            display: block;
+        }
+
+        .dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+            color: #c8c8c8;
+            text-decoration: none;
+            background-color: #5f5f5f;
+        }
+
+        .arrow-top::before, .arrow-top::after {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            border-color: #3f3f3f;
+            left: 130px;
+            content: '';
+            display: inline-block;
+            border-left: 9px solid transparent;
+            border-right: 9px solid transparent;
+            border-bottom: 9px solid;
+        }
+
+        .normal-mode .recycle {
+            bottom: 0;
+            width: 100%;
+            color: #999999;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 20px;
+        }
+
+        .normal-mode .recycle .btn {
+            width: 100%;
+            padding: 20px 0 30px 15px;
+            color: #969696;
+            background-color: #2f2f2f;
+            text-align: left;
+            border: none;
+            border-radius: 0;
+            box-sizing: border-box;
+        }
+
+        .normal-mode .recycle .btn i {
+            margin-right: 5px;
+            font-size: 22px;
+            vertical-align: middle;
+        }
+
+        .normal-mode .recycle .btn span {
+            vertical-align: middle;
+        }
+
+        .normal-mode .recycle .btn:hover {
+            color: #fff;
+        }
+
+        .edit-notebook {
+            display: none;
+        }
+
+        .dropdown-menu .divider {
+            background-color: #2f2f2f;
+        }
+    </style>
+    <style type="text/css" role="middle">
+        .middle a {
+            color: #b1b1b1;
+            text-decoration: none;
+        }
+
+        .middle .new-note-link {
+            display: block;
+            padding: 20px 0 20px 25px;
+            font-size: 15px;
+            font-weight: normal;
+            line-height: 20px;
+        }
+
+        .middle .new-note-link:hover {
+            color: #FFF;
+        }
+
+        .middle .fa-plus-circle {
+            padding-right: 3px;
+            font-size: 18px;
+            vertical-align: middle;
+        }
+
+        .notes .one-note {
+            position: relative;
+            max-height: 90px;
+            height: 90px;
+            border-top: 1px solid #2f2f2f;
+            background-color: transparent;
+            border-left: 5px solid transparent;
+        }
+
+        .notes .one-note:hover {
+            background: rgb(47, 47, 47);
+        }
+
+        .notes .one-note.active {
+            background: rgb(47, 47, 47);
+        }
+
+        .middle .nav-list > .active {
+            border-left-color: #a3cf62 !important;
+        }
+
+        .middle .nav-list > .active .dropdown-toggle {
+            display: block;
+        }
+
+        .middle .nav-list > .active .wordage {
+            display: block;
+        }
+
+        .middle .notes .icon-note {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 22px;
+            /* height: 30px; */
+            color: #c8c8c8;
+            font-size: 28px;
+        }
+
+        .middle .notes .title {
+            position: absolute;
+            display: inline-block;
+            top: 15px;
+            bottom: 15px;
+            left: 60px;
+            padding: 0;
+            margin: 0;
+            color: #b1b1b1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 18px;
+            font-weight: normal;
+            line-height: 36px;
+        }
+
+        .middle .notes .abbreviate {
+            position: absolute;
+            top: 40px;
+            left: 60px;
+            right: 40px;
+            max-height: 30px;
+            height: 30px;
+            margin: 0;
+            color: #b1b1b1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 11px;
+            font-weight: normal;
+            line-height: 36px;
+        }
+
+        .middle .notes .wordage {
+            position: absolute;
+            bottom: 2px;
+            left: 5px;
+            font-size: 9px;
+            font-weight: normal;
+            line-height: 16px;
+            color: #b1b1b1;
+            display: none;
+        }
+
+        .middle .notes .share-note {
+            position: absolute;
+            padding: 0;
+            right: 15px;
+            top: 35px;
+            display: none;
+            font-size: 16px;
+            color: #a0a0a0 !important;
+        }
+
+        .middle .nav > li > a:hover {
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        .middle .new-note-bottom {
+            font-size: 12px;
+            font-weight: normal;
+            line-height: 20px;
+        }
+
+        .middle .new-note-bottom a {
+            display: block;
+            padding: 20px 0 20px 25px;
+        }
+
+        .middle .new-note-bottom a:hover {
+            color: #fff;
+        }
+    </style>
+    <style type="text/css" role="right">
+        .normal-mode .input-title {
+            color: rgb(177, 177, 177);
+            background: rgb(63, 63, 63);
+            width: 100%;
+            padding: 0 30px 10px 40px;
+            height: 45px;
+            margin-bottom: 0;
+            border-bottom: 1px solid #d9d9d9;
+            font-size: 30px;
+            font-weight: normal;
+            line-height: 30px;
+            overflow: hidden;
+            outline: none;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            border-radius: 0;
+            border: none;
+        }
+
+        .normal-mode .editor .w-e-text-container {
+
+        }
+
+        .w-e-toolbar {
+            width: 80%;
+            flex-wrap: wrap;
+        }
+
+        .normal-mode .editor .w-e-toolbar {
+            background-color: #2f2f2f;
+        }
+
+        .normal-mode .editor .w-e-text {
+            overflow-y: auto;
+        }
+
+        .normal-mode .editor .w-e-text p {
+            color: #c8c8c8;
+        }
+
+        .editor .w-e-toolbar .w-e-menu:hover {
+            background-color: #555555;
+        }
+
+        .editor .w-e-toolbar .w-e-menu i {
+            color: #c8c8c8;
+            font-size: 16px;
+            line-height: 20px;
+        }
+
+        .editor .w-e-toolbar .w-e-menu i:hover {
+            color: #fff;
+        }
+
+        .right .function-tool {
+            position: absolute;
+            right: 0;
+            top: 65px;
+            width: 20%;
+            background-color: #2f2f2f;
+        }
+
+        .right .function-tool .tool-con {
+            float: right;
+        }
+
+        .right .function-tool .tool-menu {
+            position: relative;
+            display: inline-block;
+            text-align: center;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .right .function-tool .tool-menu:hover {
+            background-color: #555555;
+        }
+
+        .right .function-tool .tool-menu i {
+            color: #c8c8c8;
+            font-size: 16px;
+            line-height: 20px;
+        }
+
+        .right .function-tool .tool-menu i:hover {
+            color: #fff;
+        }
+    </style>
+    <style type="text/css" role="modal">
+        .modal {
+            z-index: 10005;
+            color: #999999;
+        }
+
+        .modal .btn {
+            background-color: #2f2f2f;
+            color: #b1b1b1;
+            outline: none;
+        }
+
+        .modal-backdrop {
+            background-color: #3f3f3f;
+        }
+
+        .modal-backdrop.in {
+            position: fixed;
+            opacity: .6;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1040;
+            z-index: 10002;
+            -webkit-transition: all .2s ease;
+        }
+
+        .rename-notebook-modal .modal-dialog {
+            position: relative;
+            margin-top: 150px;
+        }
+
+        .rename-notebook-modal .modal-title {
+            text-align: center;
+        }
+
+        .rename-notebook-modal .modal-header {
+            border-bottom: 1px solid #2f2f2f;
+            padding: 20px;
+        }
+
+        .rename-notebook-modal .modal-content {
+            background: #3f3f3f;
+            border: none;
+        }
+
+        .rename-notebook-modal .modal-content .modal-form {
+            text-align: center;
+        }
+
+        .rename-notebook-modal .modal-content .notebook-input {
+            background-color: #555555;
+            color: #999999;
+            border: 1px solid #2f2f2f;
+            padding: 4px 6px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 20px;
+            border-radius: 4px;
+            outline: none;
+            width: 200px;
+        }
+
+        .rename-notebook-modal .modal-footer {
+            padding: 0 15px 25px;
+            border: none;
+            background-color: transparent;
+            text-align: center;
+        }
+
+        .rename-notebook-modal .modal-footer .btn:hover {
+            color: #fff;
+        }
+
+        .delete-modal {
+            top: 30%;
+        }
+
+        .delete-modal .modal-content {
+            width: 60%;
+            margin: 0 auto;
+            background-color: #555555;
+        }
+
+        .delete-modal .modal-body {
+            padding: 30px;
+            color: #999999;
+            text-align: center;
+        }
+
+        .delete-modal .modal-footer {
+            text-align: center;
+        }
+
+        .delete-modal .modal-footer .btn:hover {
+            color: #fff;
+        }
+    </style>
+</css>
+<body class="night-mode">
+<div class="shutdown"><i class="fa fa-times-circle-o"></i> 停机维护通知，网站将永远进行停机维护</div>
+<div class="container-fluid">
+    <div class="row normal-mode">
+        <div class="col-sm-2 col-md-2 aside">
+            <div class="home-wrap">
+                <a href="./MainHome-login.html" class="go-home"><i class="fa fa-home" aria-hidden="true"></i><span>回首页</span></a>
+            </div>
+            <div class="new-notebook">
+                <a href="#" class="create-notebook"><i class="fa fa-plus"></i> 新建专题 </a>
+                <div class="new-notebook-form">
+                    <form class="create-notebook-form">
+                        <input placeholder="请输入文集名..." type="text" name="name"
+                               class="input-medium notebook-input input-group">
+                        <a href="javascript:void(0)" class="btn cancel" data-action="cancel-create-notebook"> 取消 </a>
+                        <input class="btn submit" name="commit" type="submit" value="提交">
+                    </form>
+                </div>
+            </div>
+            <ul class="notebooks wrap">
+                <li class="one-notebook item active">
+                    <a href="javascript:void(0)" class="notebook-name"><span>日记本</span></a>
+                    <a href="javascript:void(0)" class="edit-notebook dropdown-toggle" data-toggle="dropdown"> <i
+                            class="fa fa-gear"></i> </a>
+                    <ul class="dropdown-menu arrow-top">
+                        <li><a href="javascript:void(0)" class="rename-notebook" data-toggle="modal"> <i
+                                class="fa fa-pencil-square-o"></i> 修改文集名 </a></li>
+                        <li class="divider"></li>
+                        <li><a href="javascript:void(0)" class="delete-notebook"> <i class="fa fa-trash-o"></i> 删除文集
+                        </a></li>
+                    </ul>
+                </li>
+                <li class="one-notebook item">
+                    <a href="javascript:void(0)" class="notebook-name"><span>随便</span></a>
+                    <a href="javascript:void(0)" class="edit-notebook dropdown-toggle" data-toggle="dropdown"> <i
+                            class="fa fa-gear"></i> </a>
+                    <ul class="dropdown-menu arrow-top">
+                        <li><a href="javascript:void(0)" class="rename-notebook" data-toggle="modal"> <i
+                                class="fa fa-pencil-square-o"></i> 修改文集名 </a></li>
+                        <li class="divider"></li>
+                        <li><a href="javascript:void(0)" class="delete-notebook"> <i class="fa fa-trash-o"></i> 删除文集
+                        </a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="recycle">
+                <a class="btn" href="./recycle.html" data-action="recycle-mode"><i
+                        class="fa fa-trash"></i><span>回收站</span></a>
+            </div>
+        </div>
+        <div class="col-sm-3 col-md-3 middle">
+            <div class="note-list">
+                <div id="new-note">
+                    <a href="javascript:void(0)" class="new-note-link">
+                        <i class="icon fa fa-plus-circle"></i><span class="win-text">新建文章 </span>
+                    </a>
+                </div>
+                <ul class="nav nav-list notes">
+                    <li class="one-note active" data-model="note">
+                        <i class="iconfont icon-note stop-share"></i>
+                        <p class="abbreviate">sb</p>
+                        <p class="wordage win-text">字数: 0</p>
+                        <a href="javascript:void(0)" class="note-link title">无标题文章</a>
+                        <a href="javascript:void(0)" class="share-note dropdown-toggle" data-toggle="dropdown"><i
+                                class="fa fa-gear"></i></a>
+                        <ul class="dropdown-menu arrow-top">
+                            <li><a href="javascript:void(0)" class="share-link" data-action="open-share-note"> <i
+                                    class="fa fa-share"></i> 直接发布 </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" class="open-move-note"><i class="fa fa-folder-open"></i>
+                                移动文章 </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" class="delete-note"> <i class="fa fa-trash-o"></i> 删除文章
+                            </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="one-note" data-model="note">
+                        <i class="iconfont icon-note stop-share"></i>
+                        <p class="abbreviate">sb</p>
+                        <p class="wordage win-text">字数: 0</p>
+                        <a href="javascript:void(0)" class="note-link title">无标题文章</a>
+                        <a href="javascript:void(0)" class="share-note dropdown-toggle" data-toggle="dropdown"><i
+                                class="fa fa-gear"></i></a>
+                        <ul class="dropdown-menu arrow-top">
+                            <li><a href="javascript:void(0)" class="share-link" data-action="open-share-note"> <i
+                                    class="fa fa-share"></i> 直接发布 </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" class="open-move-note"><i class="fa fa-folder-open"></i>
+                                移动文章 </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" class="delete-note"> <i class="fa fa-trash-o"></i> 删除文章
+                            </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="one-note new-note-bottom">
+                    <a href="javascript:void(0)"><i class="fa fa-plus"></i>在下方新建文章</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-7 col-md-7 right">
+            <div class="function-tool">
+                <div class="tool-con">
+                    <div class="tool-menu floppy-o">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                    </div>
+                    <div class="tool-menu expand">
+                        <a href="./editor-ful.html"><i class="fa fa-expand" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="tool-menu forward">
+                        <i class="fa fa-mail-forward" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="wantEditor">
+                <div>
+                    <input class="input-title" type="text" placeholder="新建未命名文章">
+                    <div style="clear: both"></div>
+                </div>
+                <div class="editor" id="editor">
+                    <p>CNM！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-contanier">
+        <div class="modal fade rename-notebook-modal" role="dialog" aria-labelledby="renameLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title"><strong>修改文集名</strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="modal-form" onsubmit="return false">
+                            <input class="input-large notebook-input" placeholder="新文集名" name="name" type="text">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dismiss" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-confirm" data-dismiss="modal">提交更改</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade delete-modal" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="noty_message" style="font-size: 13px; text-align: center;">
+                            <span class="noty_text">确认删除文集《xxxx》，文集内文章将会被移动到回收站。</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dismiss" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-confirm" data-dismiss="modal">删除</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    var E = window.wangEditor
+    var editor = new E('#editor')
+    editor.customConfig.uploadImgServer = '/janebook/multiUpload'
+    editor.customConfig.uploadFileName = 'files'
+    editor.create()
+    // editor.txt.html('lalalalal');
+    //初始化WH
+    setTextAreaHeight()
+    // 调整浏览器窗口大小时，也要同时调整编辑器文本区域的高度
+    $(window).bind("resize", setTextAreaHeight);
+    // 调整编辑器内层文本区域高度的函数，计算方法是编辑器包装元素高度减工具栏高度，再减文本区域的垂直margin和padding之和
+    function setTextAreaHeight() {
+        var width = window.innerHeight;
+        $(".aside").height(width);
+        $(".middle").height(width);
+        $(".right").height(width - 20);
+        $("#editor").height(width - 63);
+        $('.w-e-text-container').height(width - 96);
+    }
+    // $(window).resize(function(event) {
+    //     setTextAreaHeight();
+    // });    
+</script>
+<script type="text/javascript">
+    $('.notebooks').DDSort({
+        target: 'li',       // 示例而用，默认即 li，
+        delay: 100,         // 延时处理，默认为 50 ms，防止手抖点击 A 链接无效
+        floatStyle: {
+            'border': '1px solid #222222',
+            'background-color': '#2f2f2f2'
+        }
+    });
+    $('.notes').DDSort({
+        target: 'li',       // 示例而用，默认即 li，
+        delay: 100,         // 延时处理，默认为 50 ms，防止手抖点击 A 链接无效
+        floatStyle: {
+            'border': '1px solid #2f2f2f',
+            'background-color': 'rgb(47, 47, 47)'
+        },
+    });
+</script>
+<script type="text/javascript">
+    $(function (new_coll) {
+        $(".normal-mode .new-notebook .create-notebook").on('click', function () {
+            $(".normal-mode .new-notebook .new-notebook-form").slideToggle();
+        });
+        $(".normal-mode .new-notebook .cancel").on('click', function () {
+            $(".normal-mode .new-notebook .new-notebook-form").slideToggle();
+        });
+    });
+    $(function (new_note) {
+        var newNote = '<li class="one-note" data-model="note">' +
+            '<i class="iconfont icon-note stop-share"></i>' +
+            '<p class="abbreviate"></p>' +
+            '<p class="wordage win-text">字数: 0</p>' +
+            '<a href="javascript:void(0)" class="note-link title">无标题文章</a>' +
+            '<a href="javascript:void(0)" class="share-note dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear"></i></a>' +
+            '<ul class="dropdown-menu arrow-top">' +
+            '<li> <a href="javascript:void(0)" class="share-link" data-action="open-share-note"> <i class="fa fa-share"></i> 直接发布 </a>' +
+            '</li>' +
+            '<li class="divider"></li>' +
+            '<li> <a href="javascript:void(0)" class="open-move-note"><i class="fa fa-folder-open"></i> 移动文章 </a>' +
+            '</li>' +
+            '<li class="divider"></li>' +
+            '<li> <a href="javascript:void(0)" class="delete-note"> <i class="fa fa-trash-o"></i> 删除文章 </a>' +
+            '</li>' +
+            '</ul>' +
+            '</li>';
+        $(".middle .new-note-link").on('click', function () {
+            $(".middle .notes").prepend(newNote);
+        });
+        $(".middle .new-note-bottom").on('click', function () {
+            $(".middle .notes").append(newNote);
+        })
+    });
+    $(function (middle) {
+        $(".normal-mode .middle .notes").on('click', '.one-note', function (e) {
+            $(".normal-mode .middle .notes .one-note").removeClass('active');
+            $(this).addClass('active');
+            console.log(0);
+        });
+        $(".normal-mode .middle .notes").on('click', '.delete-note', function (e) {
+            $('.delete-modal').modal({
+                keyboard: true
+            });
+            var warp = $(this).parents('.one-note');
+            $(".delete-modal .btn-confirm").click(function (event) {
+                $(this).unbind();
+                $(warp).remove();
+            });
+            // var id = Math.random();
+            $('.modal-backdrop').css("opacity", '0.8');
+        });
+        $(".normal-mode .middle .notes").on('click', '.one-note', function (e) {   //将文章名字 传递到右侧顶上input框
+            var note_name = $(this).children('.title').html();
+            // layer.msg(note_name);
+            $(".right .wantEditor .input-title").val(note_name);
+        })
+    });
+    $(function (add_note) {
+    });
+    $(function (aside) {
+        $(".aside .notebooks").on('click', '.one-notebook', function (e) {
+            $(".aside .notebooks .one-notebook").removeClass('active');
+            $(this).addClass('active');
+            // 
+            //  var emojibox = $(".emoji-con").find("*"); 
+            //  emojibox.children().index(_this) == -1
+        });
+        $(".aside .notebooks").on('click', '.rename-notebook', function (e) {
+            $('.rename-notebook-modal').modal({
+                keyboard: true
+            });
+
+            var warp = $(this).parents('.dropdown-menu').siblings(".notebook-name").children();
+            console.log(0);
+            var name = $(warp).html();
+            var input = $(".rename-notebook-modal .notebook-input");
+            $(input).val(name);
+            $(".rename-notebook-modal .modal-footer .btn-confirm").click(function () {
+                $(this).unbind();
+                var new_name = $(input).val();
+                $(warp).html(new_name);
+            });
+            var id = Math.random();
+            $('.modal-backdrop').attr('id', id);
+        });
+        $(".aside .notebooks").on('click', '.delete-notebook', function (e) {
+            $('.delete-modal').modal({
+                keyboard: true
+            });
+            var warp = $(this).parents('.one-notebook');
+            // var del_confirm= $(".delete-modal .btn-confirm");
+            $(".delete-modal .btn-confirm").click(function (event) {
+                $(this).unbind();
+                $(warp).remove();
+            });
+            var id = Math.random();
+            $('.modal-backdrop').attr('id', id).css("opacity", '0.8');
+        });
+        $(".normal-mode .new-notebook .submit").on('click', function (e) {
+            e.preventDefault();
+            var new_name = $(".new-notebook .notebook-input").val();
+            if (new_name.trim().length != 0) {
+                var new_coll = '<li class="one-notebook item">' +
+                    '<a href="javascript:void(0)" class="notebook-name"><span>' + new_name + '</span></a>' +
+                    '<a href="javascript:void(0)" class="edit-notebook dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-gear"></i> </a>' +
+                    '<ul class="dropdown-menu arrow-top">' +
+                    '<li> <a href="javascript:void(0)" class="rename-notebook" data-toggle="modal"> <i class="fa fa-pencil-square-o"></i> 修改文集名 </a> </li>' +
+                    '<li class="divider"></li>' +
+                    '<li> <a href="javascript:void(0)" class="delete-notebook"> <i class="fa fa-trash-o"></i> 删除文集 </a> </li>' +
+                    '</ul>' +
+                    '</li>';
+                $(".normal-mode .notebooks").append(new_coll);
+            }
+            else {
+                layer.msg("摸了！")
+            }
+        });
+    });
+    $(function (right) {
+        $(".right .wantEditor .input-title").keydown(function (e) {
+            // layer.msg(e.which);
+            if (e.which == 13) {
+                var name = $(this).val();
+            }
+        });
+    })
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // var json = [{"key":"value1"},{"key":"value2"}];
+        // //var jsonObj = JSON.parse(json);
+        // $.each(json, function(index, obj){
+        //     layer.msg(obj.key);
+        // })
+
+        // $.ajax({
+        //     type:"GET",
+        //     url:"",
+        //     success:function(data){
+
+        //         var html = '<p>'+data.contents+'</p>';
+        //         }
+
+        //     }
+        // })    
+        // 
+    });
+</script>
+<script>
+    //一般直接写在一个js文件中
+    // layui.use(['layer', 'form'], function(){
+    //   var layer = layui.layer
+    //   ,form = layui.form;
+
+    //   layer.msg('Hello World');
+    // });
+    // layui.use('layer', function(){
+    //     layer.tips('在上面', '#sss', {
+    //       tips: 1
+    //     });
+    // });
+
+    layui.use('layer', function () {
+        var layer = layui.layer;
+        $('.right .function-tool .forward').hover(function () {
+            var that = this;
+            layer.tips('直接发布', this);
+        }, function (index) {
+            layer.close(layer.index);
+        });
+        $('.right .function-tool .expand').hover(function () {
+            var that = this;
+            var index = layer.tips('写作模式', this);
+        }, function (index) {
+            layer.close(layer.index);
+        });
+        $('.right .function-tool .floppy-o').hover(function () {
+            var that = this;
+            var index = layer.tips('保存', this);
+        }, function (index) {
+            layer.close(layer.index);
+        });
+        $('.right .function-tool .floppy-o').on('click', function () {
+            layer.msg('已保存');
+        })
+    });
+</script>
+</html>

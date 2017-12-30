@@ -507,7 +507,6 @@ public class DateUtils {
     /**
      * 获取所在星期的第一天
      */
-    @SuppressWarnings("static-access")
     public static Date getWeekFirstDate(Date date) {
         Calendar now = Calendar.getInstance();
         now.setTime(date);
@@ -520,7 +519,6 @@ public class DateUtils {
     /**
      * 获取所在星期的最后一天
      */
-    @SuppressWarnings("static-access")
     public static Date geWeektLastDate(Date date) {
         Calendar now = Calendar.getInstance();
         now.setTime(date);
@@ -529,5 +527,9 @@ public class DateUtils {
         int last_day_of_week = first_day_of_week + 6; // 星期日
         now.set(now.DATE, last_day_of_week);
         return now.getTime();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(DateUtils.getCurrentDate());
     }
 }

@@ -88,7 +88,7 @@ public class UploadServiceImpl implements UploadService {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public synchronized Map<String, Object> serveLastPart(UserFile userFile, OriginFile file) throws IOException {
         // 保存新上传文件的信息
-        file.setFileUrl(URL_ROOT + file.getFileMd5());
+        file.setFileUrl(URL_ROOT + "images/" + file.getFileMd5());
         file.setCreateTime(new Date());
         file.setModifyTime(file.getCreateTime());
         originFileMapper.insert(file);
@@ -200,7 +200,7 @@ public class UploadServiceImpl implements UploadService {
     }
 
     /**
-     * 更新ID=userID的用户所使用的空间，更新量为size
+     * 更新ID=userId的用户所使用的空间，更新量为size
      *
      * @param plus = true 增加使用空间，plus=false减少使用空间
      * @return 更新后的用户对象

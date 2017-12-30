@@ -1,0 +1,506 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>短信</title>
+    <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" title="" rel="stylesheet"/>
+    <link title="" href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link title="blue" href="css/dermadefault.css" rel="stylesheet" type="text/css"/>
+    <link title="green" href="css/dermagreen.css" rel="stylesheet" type="text/css" disabled="disabled"/>
+    <link title="orange" href="css/dermaorange.css" rel="stylesheet" type="text/css" disabled="disabled"/>
+    <link href="css/templatecss.css" rel="stylesheet" title="" type="text/css"/>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="script/jquery.cookie.js" type="text/javascript"></script>
+    <script src="bootstrap-3.3.5-dist/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.2.504/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.2.504/styles/kendo.default.min.css" />
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.2.504/styles/kendo.default.mobile.min.css" />
+    <link href="css/examples.css"/>
+    <script src="http://kendo.cdn.telerik.com/2017.2.504/js/kendo.all.min.js"></script>
+</head>
+<style>
+    .dropZoneElement {
+        position: relative;
+        display: inline-block;
+        background-color: #f8f8f8;
+        border: 1px solid #c7c7c7;
+        width: 760px;
+        height: 330px;
+        text-align: center;
+    }
+    .textWrapper {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        font-size: 24px;
+        line-height: 1.2em;
+        font-family: Arial,Helvetica,sans-serif;
+        color: #000;
+    }
+    .dropImageHereText {
+        color: #c7c7c7;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+    .product {
+        float: left;
+        position: relative;
+        margin: 0 10px 10px 0;
+        padding: 0;
+    }
+    .product img {
+        width: 110px;
+        height: 110px;
+    }
+    .wrapper:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+</style>
+<style>
+    body {
+        font-family: sans-serif;
+        background-color: #eeeeee;
+    }
+    .file-upload {
+        background-color: #ffffff;
+        width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .file-upload-btn {
+        width: 100%;
+        margin: 0;
+        color: #fff;
+        background: #1FB264;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        border-bottom: 4px solid #15824B;
+        transition: all .2s ease;
+        outline: none;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+    .file-upload-btn:hover {
+        background: #1AA059;
+        color: #ffffff;
+        transition: all .2s ease;
+        cursor: pointer;
+    }
+    .file-upload-btn:active {
+        border: 0;
+        transition: all .2s ease;
+    }
+    .file-upload-content {
+        display: none;
+        text-align: center;
+    }
+    .file-upload-input {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        outline: none;
+        opacity: 0;
+        cursor: pointer;
+    }
+    .image-upload-wrap {
+        margin-top: 20px;
+        border: 4px dashed #1FB264;
+        position: relative;
+    }
+    .image-dropping,
+    .image-upload-wrap:hover {
+        background-color: #1FB264;
+        border: 4px dashed #ffffff;
+    }
+    .image-title-wrap {
+        padding: 0 15px 15px 15px;
+        color: #222;
+    }
+    .drag-text {
+        text-align: center;
+    }
+    .drag-text h3 {
+        font-weight: 100;
+        text-transform: uppercase;
+        color: #15824B;
+        padding: 60px 0;
+    }
+    .file-upload-image {
+        max-height: 200px;
+        max-width: 200px;
+        margin: auto;
+        padding: 20px;
+    }
+    .remove-image {
+        width: 200px;
+        margin: 0;
+        color: #fff;
+        background: #cd4535;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        border-bottom: 4px solid #b02818;
+        transition: all .2s ease;
+        outline: none;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+    .remove-image:hover {
+        background: #c13b2a;
+        color: #ffffff;
+        transition: all .2s ease;
+        cursor: pointer;
+    }
+    .remove-image:active {
+        border: 0;
+        transition: all .2s ease;
+    }
+</style>
+
+<body>
+<nav class="nav navbar-default navbar-mystyle navbar-fixed-top">
+    <div class="navbar-header">
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand mystyle-brand"><span class="glyphicon glyphicon-home"></span></a></div>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li class="li-border"><a class="mystyle-color" href="/index.html">管理控制台</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav pull-right">
+            <li class="li-border">
+                <a href="#" class="mystyle-color">
+                    <span class="glyphicon glyphicon-bell"></span>
+                    <span class="topbar-num">0</span>
+                </a>
+            </li>
+            <li class="li-border dropdown"><a href="#" class="mystyle-color" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-search"></span> 搜索</a>
+                <div class="dropdown-menu search-dropdown">
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-btn">
+                   <button type="button" class="btn btn-default">搜索</button>
+                </span>
+                    </div>
+                </div>
+            </li>
+            <li class="dropdown li-border"><a href="#" class="dropdown-toggle mystyle-color" data-toggle="dropdown">帮助与文档<span
+                    class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">帮助与文档</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">论坛</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">博客</a></li>
+                </ul>
+            </li>
+            <li class="dropdown li-border"><a href="#" class="dropdown-toggle mystyle-color" data-toggle="dropdown">退出<span
+                    class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="login.html">退出</a></li>
+                </ul>
+            </li>
+            <li class="dropdown"><a href="#" class="dropdown-toggle mystyle-color" data-toggle="dropdown">换肤<span
+                    class="caret"></span></a>
+                <ul class="dropdown-menu changecolor">
+                    <li id="blue"><a href="#">蓝色</a></li>
+                    <li class="divider"></li>
+                    <li id="green"><a href="#">绿色</a></li>
+                    <li class="divider"></li>
+                    <li id="orange"><a href="#">橙色</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="down-main">
+    <div class="left-main left-full">
+        <div class="sidebar-fold"><span class="glyphicon glyphicon-menu-hamburger"></span></div>
+        <div class="subNavBox">
+            <div class="sBox">
+                <div class="subNav sublist-down"><span class="title-icon glyphicon glyphicon-chevron-down"></span><span
+                        class="sublist-title">用户中心</span>
+                </div>
+                <ul class="navContent" style="display:block">
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="img/leftimg.png"/>账号管理</div>
+                        <a href="userInfo.html"><span class="sublist-icon glyphicon glyphicon-user"></span><span
+                                class="sub-title">账号管理</span></a></li>
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="img/leftimg.png"/>标签管理</div>
+                        <a href="message.html"><span class="sublist-icon glyphicon glyphicon-envelope"></span><span
+                                class="sub-title">标签管理</span></a></li>
+                    <li class="active">
+                        <div class="showtitle" style="width:100px;"><img src="img/leftimg.png"/>上传图片</div>
+                        <a href="smsInfo.html"><span class="sublist-icon glyphicon glyphicon-bullhorn"></span><span
+                                class="sub-title">上传图片</span></a></li>
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="img/leftimg.png"/>实名认证</div>
+                        <a href="identify.html"><span class="sublist-icon glyphicon glyphicon-credit-card"></span><span
+                                class="sub-title">实名认证</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="right-product view-product right-full">
+        <div class="container-fluid">
+
+            <div class="message-manage info-center">
+                <div class="page-header">
+                    <div class="pull-left">
+                        <h4>上传图片</h4>
+                    </div>
+                </div>
+                <div class="manage-detail">
+                    <h6 class="h5">点击或拖拽至框中以上传图片</h6>
+                    <div class="margin-tb manage-detail-con clearfix">
+                        <span class="h5 pull-left">已上传：<em class="h2" id="sum"></em>张</span>
+                        <a class="h5 recharge pull-left" href="/message.html">查看</a>
+                        <!--<a class="h5 margin-large-left custom pull-left" href="#">继续</a>-->
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="show-page padding-big-right hidden">
+                <div class="page">
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="file-upload">-->
+            <!--<button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger('click')">Add Image</button>-->
+
+            <!--<form class="image-upload-wrap" id="uploadForm" enctype="multipart/form-data">-->
+                <!--<input id="file" type='file' name="img" class="file-upload-input" size="50" onchange="readURL(this);" accept="image/*"/>-->
+                <!--<div class="drag-text">-->
+                    <!--<h3>Drag and drop a file or select add Image</h3>-->
+                <!--</div>-->
+            <!--</form>-->
+            <!--<div class="file-upload-content">-->
+                <!--<img id="img" class="file-upload-image" src="#" alt="your image"/>-->
+                <!--<div class="image-title-wrap">-->
+                    <!--<button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span>-->
+                    <!--</button>-->
+                    <!--<button type="button" onclick="ajaxFileUpload()" class="remove-image" id="upload">Upload</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <div class="file-upload">
+            <div id="exampleWrap">
+                <script>$("#exampleWrap").css("visibility", "hidden");</script>
+                <div id="example" class="k-content">
+                    <div class="demo-section k-content wide">
+                        <div class="wrapper">
+                            <div id="products"></div>
+                            <div class="dropZoneElement">
+                                <div class="textWrapper">
+                                    <p><span>+</span>Add Image</p>
+                                    <p class="dropImageHereText">Drop image here to upload</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input name="img" id="files" type="file" />
+                    <!--<button class="file-upload-btn" type="button" onclick="$('#files').trigger('click')">Add Image</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/x-kendo-template" id="template">
+    <div class="product">
+        <img src="" alt=";" />
+    </div>
+</script>
+
+<script>
+    $(function () {
+        var template = kendo.template($("#template").html());
+        var initialFiles = [];
+
+        $("#products").html(kendo.render(template, initialFiles));
+
+        $("#files").kendoUpload({
+            async: {
+                saveUrl: "http://114.115.212.203:8001/uploadImg/",
+                removeUrl: "remove",
+                autoUpload: true
+            },
+            validation: {
+                allowedExtensions: [".jpg", ".jpeg", ".png", ".bmp", ".gif"]
+            },
+            success: onSuccess,
+            showFileList: false,
+            dropZone: ".dropZoneElement"
+        });
+
+        function onSuccess(e) {
+            if (e.operation === "upload") {
+                for (var i = 0; i < e.files.length; i++) {
+                    var file = e.files[i].rawFile;
+                    if (file) {
+                        var reader = new FileReader();
+                        reader.onloadend = function () {
+                            $("<div class='product'><img src=" + this.result + " /></div>").appendTo($("#products"));
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            }
+        }
+    });
+</script>
+<script>
+    $(function(){ $("#exampleWrap").css("visibility", ""); });
+</script>
+
+
+<script type="text/javascript">
+    $(function () {
+        /*换肤*/
+        $(".dropdown .changecolor li").click(function () {
+            var style = $(this).attr("id");
+            $("link[title!='']").attr("disabled", "disabled");
+            $("link[title='" + style + "']").removeAttr("disabled");
+
+            $.cookie('mystyle', style, {expires: 7}); // 存储一个带7天期限的 cookie
+        })
+        var cookie_style = $.cookie("mystyle");
+        if (cookie_style != null) {
+            $("link[title!='']").attr("disabled", "disabled");
+            $("link[title='" + cookie_style + "']").removeAttr("disabled");
+        }
+
+        /*左侧导航栏显示隐藏功能*/
+        $(".subNav").click(function () {
+            /*显示*/
+            if ($(this).find("span:first-child").attr('class') == "title-icon glyphicon glyphicon-chevron-down") {
+                $(this).find("span:first-child").removeClass("glyphicon-chevron-down");
+                $(this).find("span:first-child").addClass("glyphicon-chevron-up");
+                $(this).removeClass("sublist-down");
+                $(this).addClass("sublist-up");
+            }
+            /*隐藏*/
+            else {
+                $(this).find("span:first-child").removeClass("glyphicon-chevron-up");
+                $(this).find("span:first-child").addClass("glyphicon-chevron-down");
+                $(this).removeClass("sublist-up");
+                $(this).addClass("sublist-down");
+            }
+            // 修改数字控制速度， slideUp(500)控制卷起速度
+            $(this).next(".navContent").slideToggle(300).siblings(".navContent").slideUp(300);
+        })
+        /*左侧导航栏缩进功能*/
+        $(".left-main .sidebar-fold").click(function () {
+
+            if ($(this).parent().attr('class') == "left-main left-full") {
+                $(this).parent().removeClass("left-full");
+                $(this).parent().addClass("left-off");
+
+                $(this).parent().parent().find(".right-product").removeClass("right-full");
+                $(this).parent().parent().find(".right-product").addClass("right-off");
+
+            }
+            else {
+                $(this).parent().removeClass("left-off");
+                $(this).parent().addClass("left-full");
+
+                $(this).parent().parent().find(".right-product").removeClass("right-off");
+                $(this).parent().parent().find(".right-product").addClass("right-full");
+
+            }
+        })
+
+        /*左侧鼠标移入提示功能*/
+        $(".sBox ul li").mouseenter(function () {
+            if ($(this).find("span:last-child").css("display") == "none") {
+                $(this).find("div").show();
+            }
+        }).mouseleave(function () {
+            $(this).find("div").hide();
+        })
+    })
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            url: 'http://114.115.212.203:8001/info/',
+            type: 'POST',
+            xhrFields: {
+                withCredentials: true
+            },
+            dataType: "json",
+            success: function (returndata) {
+                $("#sum").html(returndata.tags.length);
+            },
+            error: function (returndata) {
+                console.log(returndata.msg);
+            }
+        });
+    });
+
+    function ajaxFileUpload() {
+        $.ajax({
+            url: 'http://114.115.212.203:8001/uploadImg/',
+            type: 'POST',
+            cache: false,
+            xhrFields: {
+                withCredentials: true
+            },
+            data: new FormData($("#uploadForm")[0]),
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (returndata) {
+                removeUpload();
+            },
+            error: function (returndata) {
+                console.log(returndata.msg);
+            }
+        });
+    }
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('.image-upload-wrap').hide();
+                $('.file-upload-image').attr('src', e.target.result);
+                $('.file-upload-content').show();
+                $('.image-title').html(input.files[0].name);
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            removeUpload();
+        }
+    }
+
+    function removeUpload() {
+        $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+        $('.file-upload-content').hide();
+        $('.image-upload-wrap').show();
+    }
+    $('.image-upload-wrap').bind('dragover', function () {
+        $('.image-upload-wrap').addClass('image-dropping');
+    });
+    $('.image-upload-wrap').bind('dragleave', function () {
+        $('.image-upload-wrap').removeClass('image-dropping');
+    });
+</script>
+</html>

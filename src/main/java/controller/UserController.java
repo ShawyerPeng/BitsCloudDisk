@@ -1,6 +1,6 @@
 package controller;
 
-import common.RestResult;
+import common.ResponseResult2;
 import service.dto.UserDTO;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +8,9 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import service.UserService;
-import util.encrypt.Md5Util;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
 @RequestMapping
@@ -22,7 +20,7 @@ public class UserController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult register(@RequestBody User user) {
+    public ResponseResult2 register(@RequestBody User user) {
         String username = user.getUsername();
         String password = user.getPassword();
         //String salt = UUID.randomUUID().toString();
@@ -30,7 +28,7 @@ public class UserController {
         //user.setSalt(salt);
         //user.setPassword(Md5Util.md5(user.getPassword() + salt));
 
-        RestResult result = new RestResult();
+        ResponseResult2 result = new ResponseResult2();
         Map<String, Object> data = new HashMap<>();
 
         if (username == null || password == null) {
@@ -62,12 +60,12 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult login(@RequestBody User user) {
+    public ResponseResult2 login(@RequestBody User user) {
         String username = user.getUsername();
         String password = user.getPassword();
         //password = Md5Util.md5(user.getPassword() + user.getSalt());
 
-        RestResult result = new RestResult();
+        ResponseResult2 result = new ResponseResult2();
         Map<String, Object> data = new HashMap<>();
 
         if (username == null || password == null) {
@@ -104,8 +102,8 @@ public class UserController {
     // http://localhost:8080/user/check?username=admin
     @RequestMapping("/check")
     @ResponseBody
-    public RestResult isExistsUserName(@RequestBody User user) {
-        RestResult result = new RestResult();
+    public ResponseResult2 isExistsUserName(@RequestBody User user) {
+        ResponseResult2 result = new ResponseResult2();
         Map<String, Object> data = new HashMap<>();
 
         String username = user.getUsername();
@@ -127,8 +125,8 @@ public class UserController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult delete(@RequestBody User user) {
-        RestResult result = new RestResult();
+    public ResponseResult2 delete(@RequestBody User user) {
+        ResponseResult2 result = new ResponseResult2();
         Map<String, Object> data = new HashMap<>();
 
         String username = user.getUsername();
@@ -150,8 +148,8 @@ public class UserController {
 
     @RequestMapping(value = "/changePass", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult changePass(@RequestBody User user) {
-        RestResult result = new RestResult();
+    public ResponseResult2 changePass(@RequestBody User user) {
+        ResponseResult2 result = new ResponseResult2();
         Map<String, Object> data = new HashMap<>();
 
         String username = user.getUsername();
@@ -173,8 +171,8 @@ public class UserController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult edit(@RequestBody User user) {
-        RestResult result = new RestResult();
+    public ResponseResult2 edit(@RequestBody User user) {
+        ResponseResult2 result = new ResponseResult2();
         Map<String, Object> data = new HashMap<>();
 
         int success = userService.updateUser(user);
@@ -194,8 +192,8 @@ public class UserController {
     // http://localhost:8080/user/infoByUsername?username=admin
     @RequestMapping("/infoByUsername")
     @ResponseBody
-    public RestResult info(@RequestBody User user) {
-        RestResult result = new RestResult();
+    public ResponseResult2 info(@RequestBody User user) {
+        ResponseResult2 result = new ResponseResult2();
         Map<String, Object> data = new HashMap<>();
 
         String username = user.getUsername();
@@ -218,8 +216,8 @@ public class UserController {
     // http://localhost:8080/user/infoByUserId?userId=admin
     @RequestMapping("/infoByUserId")
     @ResponseBody
-    public RestResult infoById(@RequestBody User user) {
-        RestResult result = new RestResult();
+    public ResponseResult2 infoById(@RequestBody User user) {
+        ResponseResult2 result = new ResponseResult2();
         Map<String, Object> data = new HashMap<>();
 
         Integer userId = user.getUserId();

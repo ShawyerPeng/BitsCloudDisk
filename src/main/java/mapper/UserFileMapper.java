@@ -1,6 +1,5 @@
 package mapper;
 
-import entity.LocalFileDO;
 import model.UserFile;
 import model.UserFileExample;
 import org.apache.ibatis.annotations.Param;

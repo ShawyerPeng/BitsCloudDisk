@@ -319,7 +319,7 @@
         select
         <include refid="Base_Column_List"/>
         from user_file
-        where DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= #{createTime,jdbcType=TIMESTAMP}
+        where DATE_SUB(CURDATE(), INTERVAL 7 DAY) <![CDATA[<=]]> #{createTime,jdbcType=TIMESTAMP}
     </select>
     <select id="listByName" parameterType="map" resultMap="BaseResultMap">
         select

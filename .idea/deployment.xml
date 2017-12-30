@@ -5,7 +5,7 @@
       <paths name="118.89.142.148">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/ubuntu/netdisk" local="$PROJECT_DIR$/out/artifacts/BitsCloudDisk_war_exploded" web="/" />
           </mappings>
         </serverdata>
       </paths>

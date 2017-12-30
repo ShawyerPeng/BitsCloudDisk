@@ -27,6 +27,28 @@
             font-size: 17px !important;
         }
     </style>
+    <style>
+        /* layout.css Style */
+        .upload-drop-zone {
+            height: 200px;
+            border-width: 2px;
+            margin-bottom: 20px;
+        }
+
+        /* skin.css Style*/
+        .upload-drop-zone {
+            color: #ccc;
+            border-style: dashed;
+            border-color: #ccc;
+            line-height: 200px;
+            text-align: center
+        }
+
+        .upload-drop-zone.drop {
+            color: #222;
+            border-color: #222;
+        }
+    </style>
 </head>
 
 <body>
@@ -152,6 +174,15 @@
                         <span class="glyphicon glyphicon-trash nav-title-icon"></span>
                         回收站
                     </a></li>
+                    <br/>
+                    <li role="presentation"><a data-toggle="pill" href="#note" id="nav_note">
+                        <span class="glyphicon glyphicon-trash nav-title-icon"></span>
+                        云笔记
+                    </a></li>
+                    <li role="presentation"><a data-toggle="pill" href="#imagebed" id="nav_imagebed">
+                        <span class="glyphicon glyphicon-trash nav-title-icon"></span>
+                        图床
+                    </a></li>
                 </ul>
             </div>
         </div><!-- end of left-body -->
@@ -254,6 +285,69 @@
                     </div>
                     <ul id="recycle_folder"></ul>
                 </div>
+
+                <div id="note" class="tab-pane">
+                    <div class="fixed-title">
+                        <span>云笔记</span>
+                    </div>
+                    <ul></ul>
+                    <ul id="note-list">
+
+                    </ul>
+                </div>
+
+                <div id="imagebed" class="tab-pane">
+                    <div class="fixed-title">
+                        <span>图床</span>
+                        <div class="btn-modify-all">
+                            <button class="btn btn-default" id="imagebed_upload">上传</button>
+                        </div>
+                    </div>
+                    <ul/>
+                    <div class="container">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" style="text-align: center;"><strong> 上传文件 </strong></div>
+                            <div class="panel-body">
+
+                                <!-- Standar Form -->
+                                <h4> 请选择文件 </h4>
+                                <form action="/image/upload" method="post" enctype="multipart/form-data"
+                                      id="js-upload-form">
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <input type="file" name="file" id="js-upload-files" multiple>
+                                        </div>
+                                        <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit"> 上传
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <!-- Drop Zone -->
+                                <h4> 或者将文件拖拽到这里 </h4>
+                                <div class="upload-drop-zone" id="drop-zone">
+                                    文件显示
+                                </div>
+
+                                <!--&lt;!&ndash; Progress Bar &ndash;&gt;-->
+                                <!--<div class="progress">-->
+                                <!--<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"-->
+                                <!--aria-valuemax="100" style="width: 60%;">-->
+                                <!--<span class="sr-only"> 已上传 50% </span>-->
+                                <!--</div>-->
+                                <!--</div>-->
+
+                                <!-- Upload Finished -->
+                                <div class="js-upload-finished">
+                                    <h3> 已上传文件 </h3>
+                                    <div class="list-group" id="list-group">
+                                        <!--<a href="#" class="list-group-item list-group-item-success"><span-->
+                                        <!--class="badge alert-success pull-right">Success</span>image-01.jpg</a>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -325,7 +419,8 @@
 <script src="../../js/jquery.iframe-transport.js"></script>
 <script src="../../js/jquery.fileupload.js"></script>
 <script src="../../js/browser-md5-file.js"></script>
-
+<script src="../../js/clipboard.min.js"></script>
+<script src="../../lib/dropzone/dropzone.js"></script>
 
 <script src="../../js/util.js"></script>
 <script src="../../js/file-system.js"></script>
@@ -335,10 +430,10 @@
 <script src="../../js/contextmenu.recycle.js"></script>
 <script src="../../js/search.js"></script>
 <script>
-    /* 禁用默认的右键菜单 */
+    // 禁用默认的右键菜单
     document.oncontextmenu = function () {
         return false;
-    }
+    };
     $(function () {
         $("#nav_all").tab("show");
         $.ajax({
@@ -389,6 +484,127 @@
     $(document).ajaxSend(function (event, xhr) {
         var token = sessionStorage.getItem("token");
         xhr.setRequestHeader("Authorization", "Bearer " + token);
+    });
+</script>
+<script>
+    $("#imagebed_upload").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/image/upload",
+            contentType: "application/json; charset=utf-8",
+            success: function (user) {
+                sessionStorage.setItem("image_id", user.userId);
+            }
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/image/" + sessionStorage.getItem("image_id"),
+            contentType: "application/json; charset=utf-8",
+            success: function (user) {
+                $("#imagebed").append("<div class='input-group'><input class='btn btn-default copy-button form-control' id='clipboard' align='left' style='width:320px' value='https://github.com/zenorocha/clipboard.js.git'><button class='btn btn-default copy-button' data-clipboard-target='#foo'><img src='https://clipboardjs.com/assets/images/clippy.svg' width='10' alt='复制到剪贴板'></button>&nbsp;<a onclick='MyEventHub.emitEvent('track_event', ['上传', '打开Link']);' href='http://oqcr0rg2c.bkt.clouddn.com/17-12-16/87090161.jpg' target='_blank' class='btn btn-default'>打开</a></div>")
+            }
+        });
+    });
+</script>
+<script>
+    var clipboard = new Clipboard('.btn', {
+        target: function () {
+            return document.querySelector('#clipboard');
+        }
+    });
+    clipboard.on('success', function (e) {
+        console.log(e);
+    });
+    clipboard.on('error', function (e) {
+        console.log(e);
+    });
+</script>
+<script>
+    function loadNotes() {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            url: "/users/" + sessionStorage.getItem("user_username") + "/notes",
+            success: function (data) {
+                var node = document.createElement("li");      //创建一个li节点
+                var textnode = document.createTextNode(node);   //创建一个文本节点内容
+                $("#note-list").appendChild(textnode);
+            }
+        });
+    }
+</script>
+<script>
+    jQuery(document).ready(function () {
+        var dropZone = document.getElementById('drop-zone');
+        var uploadForm = document.getElementById('js-upload-form');
+
+        var startUpload = function (files) {
+            console.log(files);
+//            var formData = new FormData($( "#uploadForm" )[0]);
+            $.ajax({
+                type: "POST",
+                data: files,
+                cache: false,
+                processData: false,
+                url: "/image/upload",
+                success: function (data) {
+//                    $("#content").text(data);
+                },
+                error: function (data) {
+                    alert(data);
+                }
+            });
+        };
+
+        uploadForm.addEventListener('submit', function (e) {
+            var uploadFiles = document.getElementById('js-upload-files').files;
+            e.preventDefault();
+
+            startUpload(uploadFiles)
+        });
+
+//        dropZone.ondrop = function (e) {
+//            e.preventDefault();
+//            this.className = 'upload-drop-zone';
+//
+////            startUpload(e.dataTransfer.files)
+//        };
+
+        dropZone.ondragover = function () {
+            this.className = 'upload-drop-zone drop';
+            return false;
+        };
+
+        dropZone.ondragleave = function () {
+            this.className = 'upload-drop-zone';
+            return false;
+        }
+    });
+</script>
+<script>
+    var url;
+    $("#drop-zone").dropzone({
+        url: "/image/upload",
+        addRemoveLinks: true,
+        dictRemoveLinks: "x",
+        dictCancelUpload: "x",
+        maxFiles: 10,
+        maxFilesize: 5,
+        acceptedFiles: "image/*",
+        success: function (file, data) {
+            url = data.data.url;
+        },
+        init: function () {
+            this.on("success", function (file) {
+                console.log("File " + file.name + " uploaded");
+                $("#list-group").append("<a href='#' class='list-group-item list-group-item-success'><span class='badge alert-success pull-right'>Success</span>" + file.name + "</a>");
+                $("#list-group").append("<div class='input-group'><input class='btn btn-default copy-button form-control' id='clipboard' align='left' style='width:320px' value='" + url + "'><button class='btn btn-default copy-button' data-clipboard-target='#foo'><img src='https://clipboardjs.com/assets/images/clippy.svg' width='10' alt='复制到剪贴板'></button>&nbsp;<a onclick='MyEventHub.emitEvent('track_event', ['上传', '打开Link']);' href='" + url + "' target='_blank' class='btn btn-default'>打开</a></div>")
+            });
+//            this.on("removedfile", function (file) {
+//                console.log("File " + file.name + " removed");
+//            });
+        }
     });
 </script>
 </body>

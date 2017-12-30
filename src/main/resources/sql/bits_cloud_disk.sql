@@ -24,7 +24,6 @@ CREATE TABLE `user` (
   `created_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '账号创建时间',
   `last_login` TIMESTAMP NOT NULL DEFAULT '1970-01-02 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '账号最近登录时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=10000 COMMENT='用户信息表';
-INSERT INTO `user` VALUES('admin','123456','users/photo/001.jpg',0,null);
 
 CREATE TABLE `origin_file` (
   `origin_file_id` INT(11) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '原始文件ID，主键',
@@ -45,7 +44,7 @@ CREATE TABLE `user_file` (
     `origin_id` INT(11) UNSIGNED NOT NULL COMMENT '源文件ID',
     `file_name` VARCHAR(255) NOT NULL COMMENT '文件名称',
     `file_type` VARCHAR(100) NOT NULL DEFAULT 'UNKNOWN' COMMENT '文件类型（用户可以修改后缀名，但不会影响真实文件类型）',
-    `file_status` TINYINT(2) UNSIGNED NOT NULL DEFAULT 1 COMMENT '文件状态，[1=正常状态][2=回收站][3=已删除][4=未分享][5=已分享][6=私密]',
+    `file_status` TINYINT(2) UNSIGNED NOT NULL DEFAULT 1 COMMENT '文件状态，[1=正常][2=回收站][3=已删除][4=未分享][5=已分享][6=私密]',
     `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '文件创建时间',
     `modify_time` TIMESTAMP NOT NULL DEFAULT '1970-01-02 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '文件修改时间',
     `delete_time` TIMESTAMP NOT NULL DEFAULT '1970-01-02 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '文件删除时间',
@@ -66,21 +65,22 @@ INSERT INTO `user_folder` VALUES(null,'2017-10-10 10:10:10','2017-10-10 10:10:10
 INSERT INTO `user_folder` VALUES(null,'2017-10-10 10:10:10','2017-10-10 10:10:10',0,'safebox',0);
 INSERT INTO `user_folder` VALUES(null,'2017-10-10 10:10:10','2017-10-10 10:10:10',0,'trashbox',0);
 
+DROP TABLE IF EXISTS `share`;
 CREATE TABLE `share` (
   `id` INT(11) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `user_id` INT(11) UNSIGNED NOT NULL COMMENT '文件分享者ID',
-  `file_id` text not null COMMENT '文件ID',
-  `share_type` INT not null COMMENT '分享类型，共享，好友共享，私密共享',
-  `share_pass` varchar(30) COMMENT '分享密码，如果没设的话，表示共享',
-  `share_time` datetime not null COMMENT '分享时间',
-  `share_deadline` datetime COMMENT '分享有效时间',
-  `share_link` INT not null COMMENT '分享连接',
+  `file_id` INT(11) UNSIGNED NOT NULL COMMENT '文件ID',
+  `share_type` TINYINT(4) NOT NULL DEFAULT '1' COMMENT '分享类型，[1:公共分享][2:私密共享][3:好友共享][4:群组共享]',
+  `share_pass` VARCHAR(30) DEFAULT '' COMMENT '分享密码',
+  `share_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '分享时间',
+  `share_deadline` TIMESTAMP NOT NULL COMMENT '分享有效时间',
+  `share_link` VARCHAR(255) NOT NULL COMMENT '分享链接',
   `thumb_up` INT COMMENT '点赞次数',
-  `thumb_down` INT COMMENT '反对次数',
-  CONSTRAINT UserID_ShareFile_FK FOREIGN KEY () References UserInfo(UserID) -- 设置 UserID 为外键
-) ENGINE=InnoDB AUTO_INCREMENT=825 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='文件分享表';
+  `thumb_down` INT COMMENT '反对次数'
+#   CONSTRAINT UserID_ShareFile_FK FOREIGN KEY () References UserInfo(UserID) -- 设置 UserID 为外键
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=10000 COMMENT='文件分享表';
 
-
+DROP TABLE IF EXISTS `signin`;
 CREATE TABLE `signin` (
   `id` INT(11) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `user_id` INT(11) UNSIGNED NOT NULL COMMENT '用户ID',
@@ -90,29 +90,43 @@ CREATE TABLE `signin` (
   `today_rank` varchar(32) CHARACTER SET utf8 DEFAULT NULL COMMENT '今天签到排名',
   `sign_history` bigint(4) DEFAULT NULL COMMENT '签到历史，bit位数表示历史签到',
   `modify_time` datetime DEFAULT NULL COMMENT '签到时间(也即修改时间)',
-  `ext` varchar(32) DEFAULT NULL COMMENT '预留字段',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=825 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='每日签到表';
+  `ext` varchar(32) DEFAULT NULL COMMENT '预留字段'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=10000 COMMENT='每日签到表';
 
+DROP TABLE IF EXISTS `image`;
+CREATE TABLE `image` (
+  `id` INT(11) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` VARCHAR(50) NOT NULL COMMENT '图片名称',
+  `md5` CHAR(32) NOT NULL UNIQUE COMMENT 'md5值',
+  `url` VARCHAR(255) NOT NULL UNIQUE COMMENT '图片保存路径',
+  `description` VARCHAR(100) DEFAULT NULL COMMENT '图片描述'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=10000 COMMENT='图床表';
+
+DROP TABLE IF EXISTS `note`;
+CREATE TABLE `note` (
+  `id` INT(11) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `user_id` INT(11) UNSIGNED NOT NULL COMMENT '用户ID',
+  `title` VARCHAR(128) NOT NULL COMMENT '笔记标题',
+  `content` TEXT NOT NULL COMMENT '笔记内容',
+  `is_delete` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '是否删除[0:未删除][1:已删除]',
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=10000 COMMENT='云笔记表';
+
+CREATE TABLE `friend` (
+  `id` INT(11) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `friend_type` VARCHAR(100) NOT NULL DEFAULT '1' COMMENT '好友类型[1:个人好友][2:群组好友]）',
+  `user_id` INT(11) UNSIGNED NOT NULL COMMENT '用户ID',
+  `friend_id` INT(11) UNSIGNED NOT NULL COMMENT '好友ID',
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '好友关系建立时间',
+  CONSTRAINT FK_UserId_UserId FOREIGN KEY(user_id) REFERENCES user(user_id),    # 设置 UserId 为外键
+  CONSTRAINT FK_FriendId_UserId FOREIGN KEY(friend_id) REFERENCES user(user_id)	# 设置 FriendId 为外键
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=10000 COMMENT='好友表';
 
 -- 插入 / 更新 / 插入日志表
-Create table `UpdateLog` (
-  UserID varchar(30) not null,   -- 用户 ID，外键
-  UserDO varchar(80) not null,  -- 用户做的操作
-  DOTime datetime not null, -- 操作的时间
+CREATE TABLE `UpdateLog` (
+  UserID varchar(30) not null COMMENT '',   -- 用户 ID，外键
+  UserDO varchar(80) not null COMMENT '',  -- 用户做的操作
+  DOTime datetime not null COMMENT '', -- 操作的时间
   Constraint UserID_UpdateLog_FK Foreign Key(UserID) References UserInfo(UserID) -- 设置 UserID 为外键
 );
-
--- 好友表
-Create table `friend` (
-  UserID varchar(30) not null,   -- 用户 ID，外键
-  FriendType varchar(30) default '我的好友',  -- 好友类型
-  `friend_id` varchar(30) not null, -- 好友 ID
-  AddTime datetime not null, -- 添加时间
-  Constraint UserID_FriendInfo_FK Foreign Key(UserID) References UserInfo(UserID) -- 设置 UserID 为外键
-    Constraint FK_FrinedID foreign key(FriendID) references UserInfo(UserID)	-- 设置 FrinedID 为外键
-);
--- 删除表
--- drop table FriendInfo;
-
-alter table FriendInfo add Constraint FK_FrinedID foreign key(FriendID) references UserInfo(UserID)
